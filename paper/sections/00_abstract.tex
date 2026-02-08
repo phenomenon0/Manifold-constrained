@@ -1,20 +1,26 @@
 \begin{abstract}
-This paper presents an arXiv-style rigor package for MCQSMoE, centered on
-reproducible claim validation rather than SOTA benchmarking claims.
-The protocol defines five strict tracks: quality/correctness (Q), multi-seed
-quality robustness (QS), performance (P), multi-run performance statistics
-(PS), and trained-artifact parity (T). On the run snapshot dated
-2026-02-07, all gates pass: 6/6 quality tests pass, all 5 configured QS seeds
-pass, performance benchmarks are captured, 5-run statistical aggregation passes,
-and Track T parity passes with no skips. Canonical multi-run results show
-\texttt{BenchmarkParallelForward\_medium\_b32/Parallel} at 493.22 tok/s and
-\texttt{ParallelZeroCopy} at 497.76 tok/s versus 96.30 tok/s for serial,
-corresponding to 5.12x and 5.17x throughput speedups in this benchmark setting.
-Track T reports tight golden parity for tested layers (max absolute error
-\(\le 7.84\times10^{-4}\), NRMSE \(\approx 0.02\%\)) and deterministic
-replay across 10 runs. We release protocol docs, execution scripts,
-frozen artifacts, supervisor critiques, and an arXiv manuscript template in one
-GitHub-ready bundle. We also state non-claims explicitly: no matched dense
-baseline under equal budget yet, no external task leaderboard, and no hardware
-noise pinning.
+This paper studies a concrete architectural claim: sparse expert routing can be
+made more interpretable and compression-native by replacing learned router
+logits with reconstruction-error routing, then parameterizing experts as
+manifold-constrained shared anchors plus quantized deltas.
+In MCQSMoE, each expert acts as a compressor-reconstructor, routing is
+\emph{top-k lowest reconstruction error}, and expert weights are represented as
+\(W_e=\mathcal{R}(A+\Delta_e)\), where \(A\) is a shared anchor and
+\(\Delta_e\) is low-bit groupwise quantized.
+This couples three practical goals in one design: deterministic routing,
+memory-efficient expert storage, and auditable per-token decisions.
+
+On the 2026-02-08 run snapshot, all evaluation gates pass
+(Q/QS/P/PS/DB/T/X). Multi-run performance shows
+\texttt{ParallelForward\_medium\_b32/Parallel} at 529.7 tok/s versus
+100.6 tok/s for serial (5.26x), and \texttt{ParallelZeroCopy} at 512.8 tok/s
+(5.10x). Under a matched dense baseline, QSMoE is faster in both tested regimes
+(1.252x small, 1.193x large). Trained-artifact parity reports tight numerical
+agreement (max absolute error \(\le 7.84\times10^{-4}\), NRMSE \(\approx0.02\%\))
+and deterministic replay over 10 runs, while imported FFN artifacts preserve
+1.94x memory savings.
+
+These results establish internal algorithmic validity and systems efficiency for
+the proposed design. We do not claim public-benchmark state-of-the-art yet; the
+external harness remains a small-scale calibration checkpoint.
 \end{abstract}

@@ -1,25 +1,30 @@
 \section{Experimental Setup}
 \subsection{Environment}
-Environment metadata comes from \texttt{artifacts/env/env\_snapshot.txt}:
-Linux 6.17.12, Go 1.25.5, CPU AMD Ryzen 7 7700X (16 logical cores),
-31,184 MiB RAM. GPU metadata is unavailable in this snapshot.
+Environment metadata is captured in \texttt{artifacts/env/env\_snapshot.txt}:
+Linux 6.17.12, Go 1.25.5, CPU AMD Ryzen 7 7700X (16 logical cores), and
+31,184 MiB RAM.
 
-\subsection{Commands and Seeds}
+\subsection{Evaluation Axes}
+We evaluate three axes:
+\begin{enumerate}
+\item \textbf{Algorithmic validity:} correctness, determinism, routing behavior,
+and trained-artifact parity (Q, QS, T).
+\item \textbf{Systems efficiency:} throughput/latency on sparse forward paths
+with repeated runs and confidence intervals (P, PS).
+\item \textbf{Comparative sanity checks:} matched dense baseline and a fixed
+external-style MCQA harness snapshot (DB, X).
+\end{enumerate}
+
+\subsection{Protocol Controls}
 The canonical runner is:
 \begin{verbatim}
 ./foundation_models/paper_mcsqoe/scripts/40_run_all.sh
 \end{verbatim}
-Track QS seeds are fixed at: \texttt{11 23 47 101 211}.
-Track PS uses \(n=5\) repeated benchmark runs with 95\% CI computed as
-\(1.96\cdot\sigma/\sqrt{n}\).
-Track DB runs dense-vs-QSMoE matched baseline benchmarks.
-Track X runs a fixed-seed external-style MCQA harness on \texttt{mmlu-tiny}.
+QS seeds are fixed (\texttt{11 23 47 101 211}). PS uses \(n=5\) repeated runs
+and reports 95\% CI as \(1.96\cdot\sigma/\sqrt{n}\). DB aligns dense and QSMoE
+parameter/compute budgets for direct micro-benchmark comparison.
 
-\subsection{Evaluation Scope}
-Measured outcomes in this paper are strictly:
-internal correctness, deterministic behavior on defined tests, and benchmark
-throughput/latency behavior for selected paths, plus a lightweight external-style
-harness snapshot for baseline calibration/accuracy comparison.
-No public leaderboard superiority claim is made.
-
+\subsection{Scope Boundary}
+This paper validates mechanism-level and systems-level claims for MCQSMoE.
+It is not positioned as a full external leaderboard paper yet.
 \input{figures/claim_boundary}

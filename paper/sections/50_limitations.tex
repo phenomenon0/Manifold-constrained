@@ -1,12 +1,19 @@
 \section{Limitations and Threats to Validity}
 \input{tables/limitations}
 
-This package is intentionally conservative in claims. The current evidence is
-internal and benchmark-scoped. It does not yet establish superiority on public
-leaderboards or broad external generalization.
+The current evidence is strongest on mechanism and systems behavior, and weaker
+on broad external generalization. Specifically:
+\begin{enumerate}
+\item External evaluation is currently a small harness snapshot
+(\texttt{mmlu-tiny}) rather than full public benchmark suites.
+\item Throughput claims are micro-benchmark scoped; end-to-end serving
+latency/throughput under production traffic is not yet reported.
+\item Training-cost claims (e.g., wall-clock convergence, energy efficiency
+versus alternatives) are not yet established in this package.
+\end{enumerate}
 
-\paragraph{Immediate next rigor upgrades.}
-(1) Move from tiny synthetic external harness to public benchmark datasets.
-(2) Extend robustness beyond test-order shuffling to model/data randomness.
-(3) Increase PS sample count and tighten hardware-state controls.
-(4) Ensure golden artifacts are independently produced and frozen.
+\paragraph{Next upgrades for a stronger publication.}
+(1) Expand external evaluation to larger public datasets and stronger baselines.
+(2) Add serving-level results (batching, queueing, p50/p95/p99 latency).
+(3) Add training-side ablations for routing temperature, bottleneck size, and
+quantization granularity under fixed compute budgets.

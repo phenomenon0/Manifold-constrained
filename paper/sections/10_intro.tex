@@ -1,22 +1,36 @@
 \section{Introduction}
-Sparse Mixture-of-Experts (MoE) systems can deliver large compute and memory
-advantages, but claims are often hard to compare when evaluation pipelines are
-not standardized \citep{shazeer2017outrageously,lepikhin2020gshard,fedus2021switch}.
-For quantized and compressed MoE variants, the reproducibility gap is larger:
-small implementation differences can produce large quality or speed deltas
-\citep{frantar2023qmoe}.
+Sparse MoE systems are attractive because they promise higher effective model
+capacity at bounded per-token compute \citep{shazeer2017outrageously,
+lepikhin2020gshard,fedus2021switch}. In practice, two issues repeatedly
+complicate deployment: routing opacity (learned router logits are hard to audit)
+and memory pressure (many experts with expensive full-precision weights).
 
-This work focuses on rigor parity: a reproducible protocol that maps each claim
-to tests, metrics, and artifact paths. The package is explicitly scoped as a
-methodological preprint and artifact release, not a claim of external SOTA.
-We borrow the reporting discipline seen in modern large-model technical reports
-\citep{deepseek2024v3,huang2025mhc} while keeping claim boundaries aligned with
-what is directly measured in this repository.
+This work focuses on a different operating point: make routing itself
+compression-native and directly measurable. MCQSMoE replaces learned router
+logits with reconstruction-error routing, where each expert is a
+compressor-reconstructor and selection is based on which experts best
+reconstruct the token. It combines this with a shared-anchor expert
+parameterization and low-bit deltas, constrained on a row-sphere manifold.
+The resulting stack targets three engineering outcomes simultaneously:
+\emph{(i)} deterministic routing behavior, \emph{(ii)} memory/computation
+efficiency, and \emph{(iii)} auditable decision traces.
 
-\paragraph{Contributions.}
+\paragraph{What is new in this paper.}
 \begin{enumerate}
-\item A strict five-track evaluation protocol (Q/QS/P/PS/T) with hard gates.
-\item A frozen artifact bundle (logs, summaries, CI statistics, environment snapshot).
-\item Canonical paper tables/figures grounded in one run snapshot.
-\item Supervisor-style red-team critiques integrated into a pre-submission checklist.
+\item \textbf{Routing mechanism:} error-driven top-k expert selection instead of
+learned router logits, with explicit per-token routing audit statistics.
+\item \textbf{Parameterization:} manifold-constrained shared-anchor plus
+quantized per-expert deltas for compressed expert storage and reconstruction.
+\item \textbf{Execution and validation:} grouped expert dispatch and repeated-run
+measurement with matched dense baselines and trained-artifact parity checks.
+\item \textbf{Evidence boundaries:} explicit separation between proven internal
+claims and unproven external-SOTA claims, aligned with technical-report style
+discipline \citep{deepseek2024v3,huang2025mhc}.
 \end{enumerate}
+
+\paragraph{Why this matters.}
+If sparse routing is deterministic, inspectable, and cheaper than matched dense
+alternatives under controlled settings, it becomes substantially easier to trust
+and iterate in production systems. The paper is therefore not only about
+reproducibility mechanics; it is about validating a specific sparse modeling
+strategy that can reduce serving cost while keeping behavior diagnosable.

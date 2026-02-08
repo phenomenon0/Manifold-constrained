@@ -1,24 +1,47 @@
-\section{Method and Claim Compiler}
-MCQSMoE routing in this codebase uses reconstruction-error-driven top-k expert
-selection, then softmin weighting over selected errors.
-Given token \(x\) and selected experts \(\mathcal{K}\),
+\section{Method}
+\subsection{Error-Driven Sparse Routing}
+For token \(x\), each expert \(e\) reconstructs \(\hat{x}_e\). Routing score is
+the reconstruction error \(\mathrm{err}_e=\|x-\hat{x}_e\|^2\) (or configured
+variant). MCQSMoE selects the top-k experts with lowest error:
 \[
-w_e = \frac{\exp(-\mathrm{err}_e / T)}{\sum_{e' \in \mathcal{K}} \exp(-\mathrm{err}_{e'} / T)}
+\mathcal{K}(x)=\operatorname{TopK}_{\min e}\ \mathrm{err}_e.
 \]
-with fixed temperature \(T=0.1\) in the current implementation.
+Selected experts are combined by softmin weighting:
+\[
+w_e=\frac{\exp(-\mathrm{err}_e/T)}{\sum_{e'\in\mathcal{K}(x)}\exp(-\mathrm{err}_{e'}/T)},
+\]
+with fixed \(T=0.1\) in the current implementation.
+Unlike standard learned-router MoE, this routing path is directly auditable:
+the full error matrix, selected experts, weights, entropy, and residual norms
+are exported by the audit object for each batch.
 
-The protocol operates as a claim compiler:
-Claim \(\rightarrow\) Track \(\rightarrow\) Script \(\rightarrow\) Artifact \(\rightarrow\) Gate.
+\subsection{Manifold-Constrained Shared-Anchor Expert Weights}
+Each expert weight is represented as:
+\[
+W_e=\mathcal{R}(A+\Delta_e),
+\]
+where \(A\) is a layer-level shared anchor, \(\Delta_e\) is a per-expert
+quantized delta (int4/int2 groupwise), and \(\mathcal{R}\) denotes manifold
+retraction (row normalization on sphere rows in the tested configuration).
+This avoids storing full dense weights per expert and enables explicit memory
+control. In imported artifacts, the tested FFN path reports 1.94x memory
+reduction versus naive per-expert fp16 storage.
 
+\subsection{Execution Path}
+Inference uses linear decomposition:
+\[
+Y = X(A+\Delta_e)^T = XA^T + X\Delta_e^T.
+\]
+The anchor term is computed once, then delta terms are computed for selected
+experts and combined. Tokens are grouped by expert/mask assignment for batched
+dispatch, reducing redundant work in sparse execution.
+
+\subsection{Claim Compiler and Falsifiability}
+The evaluation stack is organized as:
+\[
+\text{Claim}\rightarrow\text{Track}\rightarrow\text{Script}\rightarrow\text{Artifact}\rightarrow\text{Gate}.
+\]
+This structure enforces falsifiable claims: every statement in the paper must
+map to a metric, an executable test path, and a concrete artifact.
 \input{figures/protocol_flow}
 \input{tables/claim_to_evidence}
-
-\paragraph{Gate semantics.}
-A run is successful only when all of the following hold:
-\begin{itemize}
-\item Q: all 6 quality tests pass.
-\item QS: all configured seeds pass with no skip-detected failure.
-\item P: all target benchmarks are emitted.
-\item PS: all target benchmarks have full multi-run coverage and summary stats.
-\item T: required trained/exported artifacts exist and all parity tests pass with no skips.
-\end{itemize}

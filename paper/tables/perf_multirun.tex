@@ -6,17 +6,17 @@
 Benchmark & n & Mean ns/op & Std ns/op & 95\% CI ns/op & Mean tok/s & 95\% CI tok/s \\
 \midrule
 ParallelForward\_medium\_b32/Parallel
-& 5 & 65,762,102.8 & 7,455,173.7 & 6,534,747.9 & 491.02 & 42.84 \\
+& 5 & 60,432,829.8 & 1,215,796.0 & 1,065,692.2 & 529.70 & 9.46 \\
 ParallelForward\_medium\_b32/ParallelZeroCopy
-& 5 & 63,399,367.2 & 2,213,211.1 & 1,939,965.0 & 505.22 & 14.83 \\
+& 5 & 62,453,989.8 & 1,970,309.2 & 1,727,052.2 & 512.78 & 13.66 \\
 ParallelForward\_medium\_b32/Serial
-& 5 & 326,186,056.8 & 7,032,981.0 & 6,164,679.7 & 98.13 & 1.83 \\
+& 5 & 318,085,866.4 & 4,274,570.8 & 3,746,826.5 & 100.61 & 1.17 \\
 QSMoEForward
-& 5 & 9,716,165.6 & 380,163.8 & 333,228.3 & NA & NA \\
+& 5 & 9,353,816.2 & 124,841.4 & 109,428.3 & NA & NA \\
 QSMoEForwardLarge
-& 5 & 157,520,101.0 & 3,509,261.4 & 3,076,003.3 & NA & NA \\
+& 5 & 152,751,385.2 & 818,286.3 & 717,259.6 & NA & NA \\
 WorkspaceForward\_medium\_b32
-& 5 & 287,206,814.0 & 5,583,507.5 & 4,894,160.1 & NA & NA \\
+& 5 & 286,005,141.2 & 4,131,761.1 & 3,621,648.3 & NA & NA \\
 \bottomrule
 \end{tabular}
 \caption{Canonical multi-run performance statistics from

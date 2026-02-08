@@ -1,22 +1,29 @@
 \section{Results}
-\subsection{Gate Status}
-From \texttt{artifacts/reports/summary.md} (timestamp 2026-02-08T11:18:16Z):
+\subsection{Overall Gate Status}
+From \texttt{artifacts/reports/summary.md} (timestamp 2026-02-08T11:37:19Z):
 Q=PASS, QS=PASS (5 seeds), P=PASS, PS=PASS (5 runs), DB=PASS, T=PASS, X=PASS.
 
-\subsection{Performance (Canonical Multi-Run Statistics)}
+\subsection{Sparse Execution Speedup Is Stable}
 \input{tables/perf_multirun}
+Across five runs, \texttt{Parallel} achieves 529.7 tok/s versus 100.6 tok/s
+for serial (5.26x), and \texttt{ParallelZeroCopy} achieves 512.8 tok/s
+(5.10x). This indicates the sparse grouped-dispatch path preserves a large
+speed advantage under repeated measurement, not only single-run peaks.
 
-Relative to serial in the same benchmark family, mean throughput improves by
-5.00x for \texttt{Parallel} and 5.15x for \texttt{ParallelZeroCopy}.
-
-\subsection{Dense Matched Baseline}
+\subsection{QSMoE Beats Matched Dense Baseline in Tested Regimes}
 \input{tables/dense_baseline}
+Under matched parameter/compute settings, QSMoE is faster than dense on both
+tested scales: 1.252x (small) and 1.193x (large), supporting the claim that
+the sparse/compression-native path is practically useful, not only compact.
 
-\subsection{External Harness Snapshot}
-\input{tables/external_eval}
-
-\subsection{Parity and Correctness}
+\subsection{Compression Fidelity and Determinism}
 \input{tables/track_t_parity}
+Track T shows tight parity against exported golden artifacts, with
+max absolute error below \(8\times10^{-4}\), low NRMSE, manifold invariant
+checks passing, and exact deterministic replay across 10 runs.
 
-Track T confirms numerical agreement against the tested golden artifacts,
-including deterministic replay over 10 runs.
+\subsection{External Harness Snapshot (Calibration Checkpoint)}
+\input{tables/external_eval}
+The external snapshot is intentionally small-scale (\texttt{mmlu-tiny}, fixed
+seed) and is used as an early calibration/behavior checkpoint, not a final
+generalization claim.
