@@ -1,0 +1,26 @@
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{p{0.24\linewidth}p{0.18\linewidth}p{0.26\linewidth}p{0.24\linewidth}}
+\toprule
+Claim & Primary Metric & Verification Route & Artifact Path \\
+\midrule
+Routing/composition determinism and stability
+& Quality test pass/fail; routing audit stats
+& Track Q + QS test suites
+& \texttt{artifacts/logs/quality.log}, \texttt{artifacts/logs/quality\_multiseed.log} \\
+
+Forward-path throughput gains for selected paths
+& \texttt{ns/op}, \texttt{tok/s}, 95\% CI
+& Track P + PS benchmarks
+& \texttt{artifacts/logs/perf.log}, \texttt{artifacts/bench/perf\_multirun\_stats.csv} \\
+
+Compression/quantization correctness within tolerance
+& Golden parity errors; invariant checks; determinism
+& Track T strict gate
+& \texttt{artifacts/logs/track\_t.log} \\
+\bottomrule
+\end{tabular}
+\caption{Claim-to-evidence mapping from protocol to reproducible artifacts.}
+\label{tab:claim_to_evidence}
+\end{table*}

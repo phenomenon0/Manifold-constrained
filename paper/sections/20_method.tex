@@ -1,0 +1,24 @@
+\section{Method and Claim Compiler}
+MCQSMoE routing in this codebase uses reconstruction-error-driven top-k expert
+selection, then softmin weighting over selected errors.
+Given token \(x\) and selected experts \(\mathcal{K}\),
+\[
+w_e = \frac{\exp(-\mathrm{err}_e / T)}{\sum_{e' \in \mathcal{K}} \exp(-\mathrm{err}_{e'} / T)}
+\]
+with fixed temperature \(T=0.1\) in the current implementation.
+
+The protocol operates as a claim compiler:
+Claim \(\rightarrow\) Track \(\rightarrow\) Script \(\rightarrow\) Artifact \(\rightarrow\) Gate.
+
+\input{figures/protocol_flow}
+\input{tables/claim_to_evidence}
+
+\paragraph{Gate semantics.}
+A run is successful only when all of the following hold:
+\begin{itemize}
+\item Q: all 6 quality tests pass.
+\item QS: all configured seeds pass with no skip-detected failure.
+\item P: all target benchmarks are emitted.
+\item PS: all target benchmarks have full multi-run coverage and summary stats.
+\item T: required trained/exported artifacts exist and all parity tests pass with no skips.
+\end{itemize}

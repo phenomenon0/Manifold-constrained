@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MCQSMoE Deep Dive: Paper-Rigor Evidence Stack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #111111;
+      --paper: #171717;
+      --paper-2: #1d1d1d;
+      --fg: #ecebe7;
+      --muted: #b5b1a9;
+      --line: #313131;
+      --accent: #d7b97a;
+      --accent-2: #7cc7bd;
+      --ok: #6ad695;
+      --warn: #f2b96b;
+      --bad: #f28e8e;
+      --mono: 'IBM Plex Mono', ui-monospace, monospace;
+      --body: 'Source Serif 4', serif;
+      --sans: 'IBM Plex Sans', system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(900px 400px at 100% 0%, rgba(124,199,189,0.08), transparent),
+        radial-gradient(1200px 600px at 0% 100%, rgba(215,185,122,0.08), transparent),
+        var(--bg);
+      color: var(--fg);
+      font-family: var(--body);
+      line-height: 1.62;
+    }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+
+    .title-card {
+      background: linear-gradient(180deg, #1a1a1a 0%, #151515 100%);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 22px;
+      margin-bottom: 14px;
+    }
+
+    h1, h2, h3, h4 { font-family: var(--sans); margin: 0; }
+
+    h1 {
+      font-size: clamp(1.7rem, 3.0vw, 2.9rem);
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      font-size: clamp(1.2rem, 2vw, 1.8rem);
+      margin-bottom: 10px;
+      color: var(--accent);
+    }
+
+    h3 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      color: #f2efe8;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      max-width: 95ch;
+      margin: 0 0 16px 0;
+      font-size: 1.03rem;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      border: 1px solid #3a3a3a;
+      background: #202020;
+      border-radius: 999px;
+      padding: 5px 10px;
+      color: #ddd8cc;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 290px 1fr;
+      gap: 14px;
+    }
+
+    nav {
+      position: sticky;
+      top: 10px;
+      align-self: start;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper);
+      padding: 12px;
+    }
+
+    nav h3 {
+      margin-bottom: 9px;
+      font-size: 0.95rem;
+      color: var(--accent-2);
+    }
+
+    nav a {
+      display: block;
+      color: var(--fg);
+      text-decoration: none;
+      border-left: 2px solid #3a3a3a;
+      padding: 6px 8px;
+      margin: 2px 0;
+      font-size: 0.91rem;
+      font-family: var(--sans);
+    }
+
+    nav a:hover {
+      border-left-color: var(--accent);
+      background: #212121;
+    }
+
+    section {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper);
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+
+    p { margin: 0 0 10px 0; }
+
+    .lede {
+      font-size: 1.03rem;
+      color: #f0ece3;
+    }
+
+    .mono { font-family: var(--mono); }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .status {
+      border: 1px solid #2f2f2f;
+      border-left: 4px solid var(--ok);
+      border-radius: 10px;
+      padding: 10px;
+      background: #171d18;
+    }
+
+    .status .k { font-family: var(--mono); font-size: 0.72rem; color: #b7c8bb; }
+    .status .v { font-family: var(--sans); font-size: 0.98rem; font-weight: 700; color: var(--ok); }
+
+    .concept {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .node {
+      border: 1px solid #313131;
+      border-radius: 12px;
+      padding: 10px;
+      background: var(--paper-2);
+    }
+
+    .node .tag {
+      display: inline-block;
+      border: 1px solid #38504d;
+      background: #182422;
+      color: var(--accent-2);
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 0.72rem;
+      font-family: var(--mono);
+      margin-bottom: 6px;
+    }
+
+    .node h4 { font-size: 0.96rem; margin: 0 0 4px 0; }
+    .node p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+
+    .flow {
+      margin-top: 12px;
+      border: 1px dashed #49504e;
+      border-radius: 10px;
+      background: #151b1a;
+      padding: 9px;
+      font-family: var(--mono);
+      font-size: 0.84rem;
+      overflow-x: auto;
+      color: #d6e4e1;
+    }
+
+    details {
+      border: 1px solid #343434;
+      border-radius: 11px;
+      margin: 8px 0;
+      background: var(--paper-2);
+      overflow: hidden;
+    }
+
+    summary {
+      cursor: pointer;
+      padding: 10px 12px;
+      font-family: var(--sans);
+      font-weight: 600;
+      background: #222222;
+      border-bottom: 1px solid #343434;
+    }
+
+    details > div { padding: 12px; }
+
+    pre {
+      margin: 10px 0;
+      background: #0e0e0e;
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 10px;
+      overflow-x: auto;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 1.45;
+      color: #d8d8d8;
+    }
+
+    code {
+      font-family: var(--mono);
+      font-size: 0.85em;
+      background: #222;
+      border: 1px solid #333;
+      border-radius: 4px;
+      padding: 1px 4px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      display: block;
+      overflow-x: auto;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      border: 1px solid #343434;
+      padding: 7px 8px;
+      text-align: left;
+      vertical-align: top;
+      min-width: 120px;
+    }
+
+    th {
+      background: #252525;
+      font-family: var(--sans);
+      color: #f0e5cd;
+      font-size: 0.82rem;
+    }
+
+    .ok { color: var(--ok); font-weight: 700; }
+    .warn { color: var(--warn); font-weight: 700; }
+    .bad { color: var(--bad); font-weight: 700; }
+
+    .callout {
+      border-left: 4px solid var(--accent);
+      background: #222017;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin: 10px 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .evidence-paths li {
+      margin: 4px 0;
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      word-break: break-all;
+    }
+
+    .hr {
+      height: 1px;
+      background: #343434;
+      margin: 14px 0;
+    }
+
+    .small { color: var(--muted); font-size: 0.84rem; }
+
+    @media (max-width: 1080px) {
+      .layout { grid-template-columns: 1fr; }
+      nav { position: static; }
+      .status-grid { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+      .concept { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="title-card">
+      <h1>MCQSMoE: A Real Deep Dive Into The Paper-Rigor Stack</h1>
+      <p class="subtitle lede">
+        This is not a “status dashboard.” It is an implementation-and-evidence dissection: concept map first, then progressively deeper layers
+        from algorithm internals to serialization semantics, then statistical evidence, then red-team failure analysis.
+      </p>
+      <div class="meta">
+        <span class="pill">Scope: <span class="mono">Agent-GO/foundation_models/paper_mcsqoe</span></span>
+        <span class="pill">Run snapshot: <span class="mono">2026-02-07T01:18:13Z</span></span>
+        <span class="pill">CPU: <span class="mono">AMD Ryzen 7 7700X</span></span>
+        <span class="pill">Method: concept-map -> layered deepening -> argument map</span>
+      </div>
+      <div class="status-grid">
+        <div class="status"><div class="k">quality</div><div class="v">PASS</div></div>
+        <div class="status"><div class="k">quality_multiseed</div><div class="v">PASS (5)</div></div>
+        <div class="status"><div class="k">performance</div><div class="v">PASS</div></div>
+        <div class="status"><div class="k">perf_multirun</div><div class="v">PASS (n=5)</div></div>
+        <div class="status"><div class="k">track_t</div><div class="v">PASS</div></div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <nav>
+        <h3>Contents</h3>
+        <a href="#map">1. Concept Map</a>
+        <a href="#l0">2. L0-L1: What Is Being Proven</a>
+        <a href="#l2">3. L2: QSMoE Algorithm Internals</a>
+        <a href="#l3">4. L3: QMLN Storage/Reconstruction Internals</a>
+        <a href="#l4">5. L4: Methodology Gates and Script Logic</a>
+        <a href="#evidence">6. Evidence Tables and Statistical Reading</a>
+        <a href="#argument">7. Argument Strength Map</a>
+        <a href="#redteam">8. Red-Team Failure Model</a>
+        <a href="#next">9. What A Truly Hard-Nosed Next Pass Does</a>
+        <a href="#sources">10. Source Ledger</a>
+      </nav>
+
+      <main>
+        <section id="map">
+          <h2>1) Concept Map</h2>
+          <p>
+            At a high level, this stack is a claim-validation compiler: textual claims are lowered to executable tracks,
+            tracks emit artifacts, artifacts are gated, and only then is the summary rendered.
+          </p>
+
+          <div class="concept">
+            <article class="node">
+              <span class="tag">claim layer</span>
+              <h4>Protocol</h4>
+              <p>Declares claims, tracks Q/QS/P/PS/T, acceptance gates A-F, known gaps.</p>
+            </article>
+            <article class="node">
+              <span class="tag">execution layer</span>
+              <h4>Experiment Matrix</h4>
+              <p>Binds each track to fixed commands and expected artifact paths.</p>
+            </article>
+            <article class="node">
+              <span class="tag">proof layer</span>
+              <h4>Logs + Stats</h4>
+              <p>Track logs, multirun samples, confidence intervals, and parity gate output.</p>
+            </article>
+            <article class="node">
+              <span class="tag">strictness</span>
+              <h4>Hard Fail Conditions</h4>
+              <p>Missing trained artifacts, benchmark coverage gaps, or skip-detected parity tests.</p>
+            </article>
+            <article class="node">
+              <span class="tag">aggregation</span>
+              <h4>Summary Compiler</h4>
+              <p>Collects statuses into summary.md/json; reports explicit artifact paths.</p>
+            </article>
+            <article class="node">
+              <span class="tag">threat model</span>
+              <h4>Known Gaps</h4>
+              <p>Matched dense baseline, external task eval, and hardware noise controls remain open.</p>
+            </article>
+          </div>
+
+          <div class="flow">claims -> tracks -> fixed commands -> logs/artifacts -> gates A-F -> summary.md/json</div>
+
+          <div class="callout">
+            <strong>Interpretation boundary:</strong> this pipeline proves a lot about internal correctness and reproducibility discipline.
+            It does <strong>not</strong> automatically prove task-level SOTA performance.
+          </div>
+        </section>
+
+        <section id="l0">
+          <h2>2) L0-L1: What Is Being Proven</h2>
+
+          <details open>
+            <summary>L0 (Outcome Layer): What the stack is designed to assert</summary>
+            <div>
+              <p>
+                MCQSMoE paper-rigor mode tries to establish three categories of internal truth:
+              </p>
+              <ol>
+                <li>routing/composition behavior is deterministic and auditable;</li>
+                <li>forward-path benchmark behavior is improved and statistically stable across repeated runs;</li>
+                <li>quantized artifact import/export + reconstruction is numerically consistent with golden references.</li>
+              </ol>
+            </div>
+          </details>
+
+          <details>
+            <summary>L1 (Claim Layer): explicit claims mapped to tracks</summary>
+            <div>
+              <table>
+                <thead>
+                  <tr><th>Claim</th><th>Primary tracks</th><th>Primary artifacts</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Deterministic/stable routing and composition</td>
+                    <td><span class="mono">Q</span>, <span class="mono">QS</span></td>
+                    <td><span class="mono">quality.log</span>, <span class="mono">quality_multiseed.log</span></td>
+                  </tr>
+                  <tr>
+                    <td>Throughput gains on reference forwards</td>
+                    <td><span class="mono">P</span>, <span class="mono">PS</span></td>
+                    <td><span class="mono">perf.log</span>, <span class="mono">perf_multirun_stats.csv</span></td>
+                  </tr>
+                  <tr>
+                    <td>Compression/quantization correctness tolerance</td>
+                    <td><span class="mono">T</span></td>
+                    <td><span class="mono">track_t.log</span>, golden comparisons, manifold checks</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+        </section>
+
+        <section id="l2">
+          <h2>3) L2: QSMoE Algorithm Internals (Code-Level)</h2>
+
+          <p>
+            The core design in <span class="mono">foundation_models/qsmoe.go</span> is a deliberate inversion of standard MoE routing.
+            Instead of learned router logits, experts are selected by lowest reconstruction error.
+          </p>
+
+          <h3>3.1 Type graph and role separation</h3>
+          <table>
+            <thead><tr><th>Type</th><th>Role</th><th>Why it matters</th></tr></thead>
+            <tbody>
+              <tr><td><span class="mono">CompressionExpert</span></td><td>Encoder/decoder expert with optional codebook</td><td>Expert semantics become compression basis, not opaque MLP branch.</td></tr>
+              <tr><td><span class="mono">QSMoELayer</span></td><td>Owns expert set and routing policy</td><td>Contains mode/metric/combine knobs that define behavioral regime.</td></tr>
+              <tr><td><span class="mono">QSMoEAudit</span></td><td>Per-token decisions + global stats</td><td>Makes routing inspectable: experts, weights, full error matrix, entropy, residual norms.</td></tr>
+            </tbody>
+          </table>
+
+          <h3>3.2 Forward pass mechanics</h3>
+          <p>Given batch token vectors <span class="mono">x[t]</span>:</p>
+          <ol>
+            <li>for each expert <span class="mono">e</span>, compute reconstruction <span class="mono">x_hat_e</span> via encode->quantize(optional)->decode;</li>
+            <li>compute error <span class="mono">err_e = metric(x, x_hat_e)</span>;</li>
+            <li>select top-k experts by <strong>lowest</strong> error;</li>
+            <li>compute softmin weights over selected errors with temperature 0.1;</li>
+            <li>combine selected reconstructions (weighted sum/residual/best-only);</li>
+            <li>record full audit state and residual statistics.</li>
+          </ol>
+
+          <pre>// qsmoe.go (conceptual)
+for token t:
+  for expert e:
+    x_hat[e] = Reconstruct_e(x)
+    err[e]   = ComputeError(x, x_hat[e])
+  topk = argmin_k(err)
+  w    = softmin(err[topk], temp=0.1)
+  y    = combine(x, x_hat[topk], w)
+  audit <- {topk, w, all err, residual norm}</pre>
+
+          <h3>3.3 Routing math: why it is deterministic</h3>
+          <p>
+            Selection uses sorted error pairs (<span class="mono">sort.Slice</span> ascending). For identical inputs and weights,
+            the selection path is deterministic in this implementation.
+          </p>
+          <pre>w_i = exp(-err_i / T) / sum_j exp(-err_j / T),  T = 0.1</pre>
+
+          <h3>3.4 What auditability buys you</h3>
+          <ul>
+            <li><span class="mono">TokenExperts</span> and <span class="mono">TokenWeights</span>: exact assignment trace.</li>
+            <li><span class="mono">AllErrors</span>: full decision surface, not just winning experts.</li>
+            <li><span class="mono">ExpertCounts</span> and entropy: load concentration measurement.</li>
+            <li><span class="mono">MeanResidualNorm/MaxResidualNorm</span>: reconstruction pressure signal.</li>
+          </ul>
+
+          <h3>3.5 Likely failure modes in this design</h3>
+          <ul>
+            <li>dead-expert concentration when some experts reconstruct poorly at init;</li>
+            <li>temperature sensitivity (0.1 sharpness) over-concentrating weight mass;</li>
+            <li>metric mismatch (L2/cosine/huber) changing routing behavior in subtle ways;</li>
+            <li>reconstruction objective can diverge from downstream task objective.</li>
+          </ul>
+        </section>
+
+        <section id="l3">
+          <h2>4) L3: QMLN Storage and Reconstruction Internals</h2>
+
+          <p>
+            QMLN in <span class="mono">foundation_models/qmln.go</span> is a TensorV3-layout object, not a custom external header format.
+            Metadata is TLV-encoded in <span class="mono">LayoutMeta</span>; data lives in role-tagged buffers.
+          </p>
+
+          <h3>4.1 Buffer contract</h3>
+          <table>
+            <thead><tr><th>Buffer role</th><th>Payload</th><th>Shape/size rule</th></tr></thead>
+            <tbody>
+              <tr><td><span class="mono">BufferAux</span></td><td>anchor fp16</td><td><span class="mono">out*in*2 bytes</span></td></tr>
+              <tr><td><span class="mono">BufferPrimary</span></td><td>delta_q packed int{2,4,8}</td><td><span class="mono">size/4</span> (int2), <span class="mono">size/2</span> (int4), <span class="mono">size</span> (int8)</td></tr>
+              <tr><td><span class="mono">BufferScales</span></td><td>group scales fp16</td><td><span class="mono">num_groups*2 bytes</span>, axis-dependent</td></tr>
+            </tbody>
+          </table>
+
+          <h3>4.2 Reconstruction equation</h3>
+          <pre>anchor_f32 = fp16_to_f32(anchor)
+scales_f32 = fp16_to_f32(scales)
+delta_f32  = dequant_groupwise_sym(delta_q, scales_f32, group_size)
+W          = anchor_f32 + delta_f32
+W          = retract(W)                // normalize rows, target norm optional
+W_masked   = apply_2of4_mask(W, maskID)  // optional, only canonical family</pre>
+
+          <h3>4.3 Metadata TLV fields that control behavior</h3>
+          <ul>
+            <li>manifold type;</li>
+            <li>retraction type;</li>
+            <li>delta bound epsilon;</li>
+            <li>anchor norm target;</li>
+            <li>mask family;</li>
+            <li>group axis and quant group size.</li>
+          </ul>
+
+          <h3>4.4 Constraints and edge cases</h3>
+          <ul>
+            <li><span class="mono">in_features % group_size</span> or <span class="mono">out_features % group_size</span> must divide by chosen axis;</li>
+            <li>2:4 mask family requires <span class="mono">in_features % 4 == 0</span>;</li>
+            <li>constructor accepts int8 delta mode, but reconstruct/encode path here is implemented for int2/int4 flows used by tests;</li>
+            <li>masking only applies when <span class="mono">maskID >= 0</span> and family is canonical 2:4.</li>
+          </ul>
+
+          <div class="callout">
+            Track T validates this path indirectly by golden parity checks, manifold invariant checks,
+            and E2E shard reconstruction tests from exported artifacts.
+          </div>
+        </section>
+
+        <section id="l4">
+          <h2>5) L4: Methodology and Gate Logic (Script-Level)</h2>
+
+          <p>
+            The rigor package is codified in shell scripts. This matters because rigor is only as strong as what the runner refuses to ignore.
+          </p>
+
+          <h3>5.1 Gate execution order</h3>
+          <pre>00_env_snapshot.sh
+10_quality_suite.sh
+15_quality_multiseed_suite.sh   // strict, skip detection
+20_perf_suite.sh
+22_perf_multirun_ci_suite.sh    // strict coverage + CI outputs
+25_track_t_artifact_suite.sh    // strict artifact + no-skip gate
+30_collect_summary.sh
+40_run_all.sh                   // exits non-zero if gated tracks fail</pre>
+
+          <h3>5.2 Statistical assumptions in PS</h3>
+          <ul>
+            <li>independent repeated benchmark runs;</li>
+            <li>sample std (n-1) used;</li>
+            <li>95% CI via normal approximation <span class="mono">1.96*std/sqrt(n)</span> (not t-distribution adjustment).</li>
+          </ul>
+
+          <h3>5.3 Hard fail conditions</h3>
+          <table>
+            <thead><tr><th>Track</th><th>Hard fail trigger</th><th>Why this is important</th></tr></thead>
+            <tbody>
+              <tr><td>QS</td><td>any run fail or any skip detected</td><td>prevents “pass by reduced execution”.</td></tr>
+              <tr><td>PS</td><td>missing expected benchmark coverage across runs</td><td>prevents biased stats from partial sample sets.</td></tr>
+              <tr><td>T</td><td>missing artifact or any skipped parity test</td><td>prevents parity claims without real exported/trained evidence.</td></tr>
+            </tbody>
+          </table>
+
+          <h3>5.4 Method weaknesses still acknowledged by protocol</h3>
+          <ul>
+            <li>no matched dense-vs-MCQSMoE baseline at equal budget yet;</li>
+            <li>no external task benchmark table yet;</li>
+            <li>no explicit hardware noise controls (thermal/governor pinning) yet.</li>
+          </ul>
+        </section>
+
+        <section id="evidence">
+          <h2>6) Evidence Tables and Statistical Reading</h2>
+
+          <h3>6.1 Quality and parity snapshots</h3>
+          <table>
+            <thead>
+              <tr><th>Evidence item</th><th>Value</th><th>Read</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Q routing entropy (single)</td><td>1.654 / 3.000 (55.1%)</td><td>non-collapsed but not max-uniform routing.</td></tr>
+              <tr><td>Q forward audit entropy</td><td>1.272 bits (max 2.000)</td><td>expert use concentrated but not degenerate.</td></tr>
+              <tr><td>Q forward audit residuals</td><td>mean 3.4414, max 3.9957</td><td>reconstruction error present and measurable.</td></tr>
+              <tr><td>QS seed set</td><td>11, 23, 47, 101, 211 all PASS</td><td>reduces single-seed fluke risk.</td></tr>
+              <tr><td>Track T status</td><td class="ok">PASS</td><td>artifact parity gate fully satisfied.</td></tr>
+              <tr><td>Golden parity NRMSE</td><td>0.0002 (0.02%) on tested layers</td><td>very tight numeric agreement for tested points.</td></tr>
+              <tr><td>Manifold invariant error</td><td>max_norm_err ~0.000024 to 0.000069</td><td>constraint preservation strong in tested layers.</td></tr>
+              <tr><td>Exported model memory</td><td>12672 KiB total; per-layer 1.94x savings</td><td>compression story internally consistent in tested exports.</td></tr>
+            </tbody>
+          </table>
+
+          <h3>6.2 Multi-run performance statistics (n=5)</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Benchmark</th>
+                <th>Mean ns/op</th>
+                <th>Std ns/op</th>
+                <th>95% CI ns/op</th>
+                <th>Mean tok/s</th>
+                <th>95% CI tok/s</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Parallel</td>
+                <td>63,777,901.6</td>
+                <td>2,878,820.8</td>
+                <td>+/- 2,523,397.7</td>
+                <td>502.54</td>
+                <td>+/- 19.31</td>
+              </tr>
+              <tr>
+                <td>ParallelZeroCopy</td>
+                <td>63,974,300.0</td>
+                <td>2,103,737.2</td>
+                <td>+/- 1,844,006.97</td>
+                <td>500.64</td>
+                <td>+/- 14.81</td>
+              </tr>
+              <tr>
+                <td>Serial</td>
+                <td>332,044,328.2</td>
+                <td>7,033,411.0</td>
+                <td>+/- 6,165,056.57</td>
+                <td>96.406</td>
+                <td>+/- 1.78</td>
+              </tr>
+              <tr>
+                <td>QSMoEForward</td>
+                <td>9,736,051.6</td>
+                <td>196,912.6</td>
+                <td>+/- 172,601.48</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>QSMoEForwardLarge</td>
+                <td>158,715,398.0</td>
+                <td>3,056,851.6</td>
+                <td>+/- 2,679,448.58</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+              <tr>
+                <td>WorkspaceForward_medium_b32</td>
+                <td>290,285,866.6</td>
+                <td>5,962,423.5</td>
+                <td>+/- 5,226,294.62</td>
+                <td>-</td>
+                <td>-</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>6.3 Derived deltas</h3>
+          <ul>
+            <li><span class="mono">Parallel vs Serial</span>: <strong>5.21x</strong> throughput.</li>
+            <li><span class="mono">ParallelZeroCopy vs Serial</span>: <strong>5.19x</strong> throughput.</li>
+            <li><span class="mono">Parallel vs ParallelZeroCopy</span>: +1.90 tok/s (~0.38%), overlapping CIs -> effectively tied at current n.</li>
+          </ul>
+
+          <p class="small">
+            Important: single-run perf numbers can overstate means by a few percent. Multi-run stats are the authoritative read.
+          </p>
+        </section>
+
+        <section id="argument">
+          <h2>7) Argument Strength Map</h2>
+          <table>
+            <thead><tr><th>Claim class</th><th>Support level</th><th>Reason</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Unit-level correctness and deterministic routing mechanics</td>
+                <td class="ok">Strong</td>
+                <td>Q + QS all-pass and stable audit values across seed set.</td>
+              </tr>
+              <tr>
+                <td>Artifact parity and reconstruction fidelity</td>
+                <td class="ok">Strong (tested scope)</td>
+                <td>Track T pass, tight golden error, manifold invariants, deterministic replay.</td>
+              </tr>
+              <tr>
+                <td>Benchmarked throughput advantage in tested scenario</td>
+                <td class="ok">Strong (benchmark scope)</td>
+                <td>PS shows ~5.2x vs serial with confidence intervals.</td>
+              </tr>
+              <tr>
+                <td>Expert load balance as an optimized property</td>
+                <td class="warn">Moderate/weak</td>
+                <td>Dead-expert warnings persist; tests pass but do not prove balanced utilization objective.</td>
+              </tr>
+              <tr>
+                <td>Task-level model quality and external benchmark superiority</td>
+                <td class="bad">Unsupported by this stack</td>
+                <td>No external task harness in current protocol outputs.</td>
+              </tr>
+              <tr>
+                <td>Cross-hardware generalization of perf numbers</td>
+                <td class="bad">Unsupported</td>
+                <td>Current data is one machine profile; no hardware-noise controls yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="redteam">
+          <h2>8) Red-Team Failure Model</h2>
+
+          <div class="grid-2">
+            <article>
+              <h3>8.1 Plausible failure channels</h3>
+              <ul>
+                <li>headline README quality/throughput/VRAM narratives not yet protocol-proven end-to-end;</li>
+                <li>no matched dense baseline can confound comparison story;</li>
+                <li>microbench speedup may not map to full pipeline latency/throughput;</li>
+                <li>determinism could degrade under different runtime/hardware/compiler contexts;</li>
+                <li>golden parity can be excellent yet still miss untested regimes.</li>
+              </ul>
+            </article>
+            <article>
+              <h3>8.2 Severity x likelihood sketch</h3>
+              <table>
+                <thead><tr><th>Risk</th><th>Impact</th><th>Likelihood</th></tr></thead>
+                <tbody>
+                  <tr><td>Baseline mismatch</td><td class="bad">High</td><td class="bad">High</td></tr>
+                  <tr><td>Task-level evidence gap</td><td class="bad">High</td><td class="warn">Medium</td></tr>
+                  <tr><td>Perf generalization gap</td><td class="warn">Medium</td><td class="warn">Medium</td></tr>
+                  <tr><td>Residual expert concentration</td><td class="warn">Medium</td><td class="warn">Medium</td></tr>
+                </tbody>
+              </table>
+            </article>
+          </div>
+
+          <div class="callout">
+            A tough reviewer would say: internal rigor is good; external claim surface is still underpowered.
+            That is a fair reading of the current artifact set.
+          </div>
+        </section>
+
+        <section id="next">
+          <h2>9) What A Hard-Nosed Next Pass Does</h2>
+          <ol>
+            <li>
+              <strong>Matched dense-vs-MCQSMoE baseline at equal parameter and compute budget.</strong>
+              This removes the biggest confound in quality/memory claims.
+            </li>
+            <li>
+              <strong>Add a minimal external task benchmark harness.</strong>
+              Even a compact table is better than zero external validity evidence.
+            </li>
+            <li>
+              <strong>Expand seed and run counts.</strong>
+              Raise <span class="mono">MCSQOE_QUALITY_SEEDS</span> and <span class="mono">MCSQOE_MULTI_RUNS</span> to tighten uncertainty.
+            </li>
+            <li>
+              <strong>Add hardware-state capture and optional pinned-mode reruns.</strong>
+              Reduces thermal/governor noise ambiguity in performance claims.
+            </li>
+            <li>
+              <strong>Tie README metrics to hashed artifact provenance.</strong>
+              Prevents drift between narrative numbers and executable evidence.
+            </li>
+          </ol>
+        </section>
+
+        <section id="sources">
+          <h2>10) Source Ledger</h2>
+          <p>Primary files used for this deep dive:</p>
+          <ul class="evidence-paths">
+            <li>Agent-GO/foundation_models/qsmoe.go</li>
+            <li>Agent-GO/foundation_models/qmln.go</li>
+            <li>Agent-GO/foundation_models/golden_pytorch_test.go</li>
+            <li>Agent-GO/foundation_models/import_pytorch_test.go</li>
+            <li>Agent-GO/foundation_models/paper_mcsqoe/PROTOCOL.md</li>
+            <li>Agent-GO/foundation_models/paper_mcsqoe/EXPERIMENT_MATRIX.yaml</li>
+            <li>Agent-GO/foundation_models/paper_mcsqoe/scripts/15_quality_multiseed_suite.sh</li>
+            <li>Agent-GO/foundation_models/paper_mcsqoe/scripts/22_perf_multirun_ci_suite.sh</li>
+            <li>Agent-GO/foundation_models/paper_mcsqoe/scripts/30_collect_summary.sh</li>
+            <li>Agent-GO/foundation_models/paper_mcsqoe/scripts/40_run_all.sh</li>
+            <li>Agent-GO/foundation_models/paper_mcsqoe/results/summary.json</li>
+            <li>Agent-GO/foundation_models/paper_mcsqoe/results/logs/quality.log</li>
+            <li>Agent-GO/foundation_models/paper_mcsqoe/results/logs/quality_multiseed.log</li>
+            <li>Agent-GO/foundation_models/paper_mcsqoe/results/logs/perf.log</li>
+            <li>Agent-GO/foundation_models/paper_mcsqoe/results/perf_multirun_stats.csv</li>
+            <li>Agent-GO/foundation_models/paper_mcsqoe/results/logs/track_t.log</li>
+            <li>Agent-GO/examples/toy_mcqsmoe/README.md</li>
+          </ul>
+
+          <div class="hr"></div>
+          <p class="small">
+            Drafting process: section fan-out via parallel subagents for methodology, parity evidence, performance statistics,
+            and red-team critique; then merged and expanded with direct code-level internals.
+          </p>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+timestamp_utc=2026-02-07T01:35:34Z
+seeds=11 23 47 101 211
+phase=run seed=11
+command=go test -v -count=1 -shuffle=11 -timeout=20m -run 'TestQSMoE(LayerCreation|ForwardBasic|RoutingDeterminism|Specialization|AuditEntropy|CombineMethods)$' ./foundation_models
+-test.shuffle 11
+=== RUN   TestQSMoELayerCreation
+--- PASS: TestQSMoELayerCreation (0.00s)
+=== RUN   TestQSMoERoutingDeterminism
+--- PASS: TestQSMoERoutingDeterminism (0.00s)
+=== RUN   TestQSMoECombineMethods
+--- PASS: TestQSMoECombineMethods (0.00s)
+=== RUN   TestQSMoEAuditEntropy
+    qsmoe_test.go:326: Routing entropy: 1.641 / 3.000 (54.7% of max)
+    qsmoe_test.go:338: Warning: 4 dead experts (may be okay for random init)
+--- PASS: TestQSMoEAuditEntropy (0.00s)
+=== RUN   TestQSMoESpecialization
+    qsmoe_test.go:295: Specialization test passed: experts correctly route to their subspaces
+--- PASS: TestQSMoESpecialization (0.00s)
+=== RUN   TestQSMoEForwardBasic
+    qsmoe_test.go:199: Audit summary:
+        QSMoE Audit:
+          Routing entropy: 1.477 bits (max=2.000)
+          Most used: expert 1 (8 tokens)
+          Least used: expert 0 (3 tokens)
+          Dead experts: 1
+          Mean residual: 2.4833
+          Max residual: 2.7582
+--- PASS: TestQSMoEForwardBasic (0.00s)
+PASS
+ok  	github.com/phenomenon0/Agent-GO/foundation_models	0.003s
+run_status=PASS seed=11
+phase=run seed=23
+command=go test -v -count=1 -shuffle=23 -timeout=20m -run 'TestQSMoE(LayerCreation|ForwardBasic|RoutingDeterminism|Specialization|AuditEntropy|CombineMethods)$' ./foundation_models
+-test.shuffle 23
+=== RUN   TestQSMoESpecialization
+    qsmoe_test.go:295: Specialization test passed: experts correctly route to their subspaces
+--- PASS: TestQSMoESpecialization (0.00s)
+=== RUN   TestQSMoERoutingDeterminism
+--- PASS: TestQSMoERoutingDeterminism (0.00s)
+=== RUN   TestQSMoECombineMethods
+--- PASS: TestQSMoECombineMethods (0.00s)
+=== RUN   TestQSMoEAuditEntropy
+    qsmoe_test.go:326: Routing entropy: 1.641 / 3.000 (54.7% of max)
+    qsmoe_test.go:338: Warning: 4 dead experts (may be okay for random init)
+--- PASS: TestQSMoEAuditEntropy (0.00s)
+=== RUN   TestQSMoELayerCreation
+--- PASS: TestQSMoELayerCreation (0.00s)
+=== RUN   TestQSMoEForwardBasic
+    qsmoe_test.go:199: Audit summary:
+        QSMoE Audit:
+          Routing entropy: 1.477 bits (max=2.000)
+          Most used: expert 1 (8 tokens)
+          Least used: expert 0 (3 tokens)
+          Dead experts: 1
+          Mean residual: 2.4833
+          Max residual: 2.7582
+--- PASS: TestQSMoEForwardBasic (0.00s)
+PASS
+ok  	github.com/phenomenon0/Agent-GO/foundation_models	0.003s
+run_status=PASS seed=23
+phase=run seed=47
+command=go test -v -count=1 -shuffle=47 -timeout=20m -run 'TestQSMoE(LayerCreation|ForwardBasic|RoutingDeterminism|Specialization|AuditEntropy|CombineMethods)$' ./foundation_models
+-test.shuffle 47
+=== RUN   TestQSMoELayerCreation
+--- PASS: TestQSMoELayerCreation (0.00s)
+=== RUN   TestQSMoERoutingDeterminism
+--- PASS: TestQSMoERoutingDeterminism (0.00s)
+=== RUN   TestQSMoECombineMethods
+--- PASS: TestQSMoECombineMethods (0.00s)
+=== RUN   TestQSMoESpecialization
+    qsmoe_test.go:295: Specialization test passed: experts correctly route to their subspaces
+--- PASS: TestQSMoESpecialization (0.00s)
+=== RUN   TestQSMoEAuditEntropy
+    qsmoe_test.go:326: Routing entropy: 1.641 / 3.000 (54.7% of max)
+    qsmoe_test.go:338: Warning: 4 dead experts (may be okay for random init)
+--- PASS: TestQSMoEAuditEntropy (0.00s)
+=== RUN   TestQSMoEForwardBasic
+    qsmoe_test.go:199: Audit summary:
+        QSMoE Audit:
+          Routing entropy: 1.477 bits (max=2.000)
+          Most used: expert 1 (8 tokens)
+          Least used: expert 0 (3 tokens)
+          Dead experts: 1
+          Mean residual: 2.4833
+          Max residual: 2.7582
+--- PASS: TestQSMoEForwardBasic (0.00s)
+PASS
+ok  	github.com/phenomenon0/Agent-GO/foundation_models	0.003s
+run_status=PASS seed=47
+phase=run seed=101
+command=go test -v -count=1 -shuffle=101 -timeout=20m -run 'TestQSMoE(LayerCreation|ForwardBasic|RoutingDeterminism|Specialization|AuditEntropy|CombineMethods)$' ./foundation_models
+-test.shuffle 101
+=== RUN   TestQSMoECombineMethods
+--- PASS: TestQSMoECombineMethods (0.00s)
+=== RUN   TestQSMoELayerCreation
+--- PASS: TestQSMoELayerCreation (0.00s)
+=== RUN   TestQSMoESpecialization
+    qsmoe_test.go:295: Specialization test passed: experts correctly route to their subspaces
+--- PASS: TestQSMoESpecialization (0.00s)
+=== RUN   TestQSMoEAuditEntropy
+    qsmoe_test.go:326: Routing entropy: 1.641 / 3.000 (54.7% of max)
+    qsmoe_test.go:338: Warning: 4 dead experts (may be okay for random init)
+--- PASS: TestQSMoEAuditEntropy (0.00s)
+=== RUN   TestQSMoERoutingDeterminism
+--- PASS: TestQSMoERoutingDeterminism (0.00s)
+=== RUN   TestQSMoEForwardBasic
+    qsmoe_test.go:199: Audit summary:
+        QSMoE Audit:
+          Routing entropy: 1.406 bits (max=2.000)
+          Most used: expert 3 (8 tokens)
+          Least used: expert 0 (2 tokens)
+          Dead experts: 1
+          Mean residual: 2.2896
+          Max residual: 3.2120
+--- PASS: TestQSMoEForwardBasic (0.00s)
+PASS
+ok  	github.com/phenomenon0/Agent-GO/foundation_models	0.003s
+run_status=PASS seed=101
+phase=run seed=211
+command=go test -v -count=1 -shuffle=211 -timeout=20m -run 'TestQSMoE(LayerCreation|ForwardBasic|RoutingDeterminism|Specialization|AuditEntropy|CombineMethods)$' ./foundation_models
+-test.shuffle 211
+=== RUN   TestQSMoERoutingDeterminism
+--- PASS: TestQSMoERoutingDeterminism (0.00s)
+=== RUN   TestQSMoEForwardBasic
+    qsmoe_test.go:199: Audit summary:
+        QSMoE Audit:
+          Routing entropy: 1.406 bits (max=2.000)
+          Most used: expert 3 (8 tokens)
+          Least used: expert 0 (2 tokens)
+          Dead experts: 1
+          Mean residual: 2.2896
+          Max residual: 3.2120
+--- PASS: TestQSMoEForwardBasic (0.00s)
+=== RUN   TestQSMoESpecialization
+    qsmoe_test.go:295: Specialization test passed: experts correctly route to their subspaces
+--- PASS: TestQSMoESpecialization (0.00s)
+=== RUN   TestQSMoELayerCreation
+--- PASS: TestQSMoELayerCreation (0.00s)
+=== RUN   TestQSMoECombineMethods
+--- PASS: TestQSMoECombineMethods (0.00s)
+=== RUN   TestQSMoEAuditEntropy
+    qsmoe_test.go:326: Routing entropy: 1.641 / 3.000 (54.7% of max)
+    qsmoe_test.go:338: Warning: 4 dead experts (may be okay for random init)
+--- PASS: TestQSMoEAuditEntropy (0.00s)
+PASS
+ok  	github.com/phenomenon0/Agent-GO/foundation_models	0.003s
+run_status=PASS seed=211
+QUALITY_MULTI_SEED_STATUS=PASS

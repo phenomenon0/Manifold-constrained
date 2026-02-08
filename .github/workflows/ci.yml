@@ -1,0 +1,29 @@
+name: mcsqoe-rigor
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "foundation_models/paper_mcsqoe/**"
+
+jobs:
+  rigor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.x"
+      - name: Run paper-rigor protocol
+        run: |
+          cd Agent-GO
+          ./foundation_models/paper_mcsqoe/scripts/40_run_all.sh
+      - name: Upload summary artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: mcsqoe-rigor-results
+          path: |
+            Agent-GO/foundation_models/paper_mcsqoe/results/summary.md
+            Agent-GO/foundation_models/paper_mcsqoe/results/summary.json
+            Agent-GO/foundation_models/paper_mcsqoe/results/perf_multirun_stats.csv
+            Agent-GO/foundation_models/paper_mcsqoe/results/logs/*.log

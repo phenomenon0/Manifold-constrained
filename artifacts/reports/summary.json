@@ -1,0 +1,23 @@
+{
+  "timestamp_utc": "2026-02-07T01:36:56Z",
+  "quality_status": "PASS",
+  "quality_tests_passed": 6,
+  "quality_multiseed_status": "PASS",
+  "quality_multiseed_seeds": 5,
+  "perf_status": "PASS",
+  "benchmark_lines_captured": 6,
+  "perf_multirun_status": "PASS",
+  "perf_multirun_runs": 5,
+  "track_t_status": "PASS",
+  "artifacts": {
+    "env_snapshot": "foundation_models/paper_mcsqoe/results/env_snapshot.txt",
+    "quality_log": "foundation_models/paper_mcsqoe/results/logs/quality.log",
+    "quality_multiseed_log": "foundation_models/paper_mcsqoe/results/logs/quality_multiseed.log",
+    "perf_log": "foundation_models/paper_mcsqoe/results/logs/perf.log",
+    "perf_multirun_log": "foundation_models/paper_mcsqoe/results/logs/perf_multirun.log",
+    "perf_multirun_summary_md": "foundation_models/paper_mcsqoe/results/perf_multirun_summary.md",
+    "perf_multirun_stats_csv": "foundation_models/paper_mcsqoe/results/perf_multirun_stats.csv",
+    "track_t_log": "foundation_models/paper_mcsqoe/results/logs/track_t.log",
+    "summary_md": "foundation_models/paper_mcsqoe/results/summary.md"
+  }
+}

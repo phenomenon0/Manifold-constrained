@@ -1,0 +1,20 @@
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{p{0.33\linewidth}p{0.5\linewidth}}
+\toprule
+Track T Check & Observed Result \\
+\midrule
+Required artifacts precheck & PASS (all required manifests and golden shard found) \\
+Golden parity (layer 0) & max\_abs=0.000732, rmse=0.000185, nrmse=0.02\% \\
+Golden parity (layer 5) & max\_abs=0.000784, rmse=0.000182, nrmse=0.02\% \\
+Manifold invariant checks & max norm error range 0.000024 to 0.000069 \\
+Determinism replay & PASS: identical outputs across 10 runs \\
+Exported model memory summary & 12,672 KiB total; per-layer FFN savings 1.94x \\
+Final gate status & \texttt{TRACK\_T\_STATUS=PASS} \\
+\bottomrule
+\end{tabular}
+\caption{Track T artifact parity evidence from
+\texttt{artifacts/logs/track\_t.log}.}
+\label{tab:track_t}
+\end{table}

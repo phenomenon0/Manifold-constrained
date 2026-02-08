@@ -1,0 +1,22 @@
+\section{Introduction}
+Sparse Mixture-of-Experts (MoE) systems can deliver large compute and memory
+advantages, but claims are often hard to compare when evaluation pipelines are
+not standardized \citep{shazeer2017outrageously,lepikhin2020gshard,fedus2021switch}.
+For quantized and compressed MoE variants, the reproducibility gap is larger:
+small implementation differences can produce large quality or speed deltas
+\citep{frantar2023qmoe}.
+
+This work focuses on rigor parity: a reproducible protocol that maps each claim
+to tests, metrics, and artifact paths. The package is explicitly scoped as a
+methodological preprint and artifact release, not a claim of external SOTA.
+We borrow the reporting discipline seen in modern large-model technical reports
+\citep{deepseek2024v3,huang2025mhc} while keeping claim boundaries aligned with
+what is directly measured in this repository.
+
+\paragraph{Contributions.}
+\begin{enumerate}
+\item A strict five-track evaluation protocol (Q/QS/P/PS/T) with hard gates.
+\item A frozen artifact bundle (logs, summaries, CI statistics, environment snapshot).
+\item Canonical paper tables/figures grounded in one run snapshot.
+\item Supervisor-style red-team critiques integrated into a pre-submission checklist.
+\end{enumerate}

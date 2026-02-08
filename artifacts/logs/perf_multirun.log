@@ -1,0 +1,86 @@
+timestamp_utc=2026-02-07T01:35:49Z
+runs=5
+benchtime=1s
+timeout=30m
+phase=run index=1
+command=go test -run '^$' -benchmem -benchtime=1s -count=1 -timeout=30m -bench 'Benchmark(QSMoEForward|QSMoEForwardLarge|ParallelForward_medium_b32|WorkspaceForward_medium_b32)$' ./foundation_models
+goos: linux
+goarch: amd64
+pkg: github.com/phenomenon0/Agent-GO/foundation_models
+cpu: AMD Ryzen 7 7700X 8-Core Processor             
+BenchmarkParallelForward_medium_b32/Serial-16         	       4	 323044254 ns/op	         1.662 GFLOPS	        99.06 tok/s	   12864 B/op	     147 allocs/op
+BenchmarkParallelForward_medium_b32/Parallel-16       	      18	  63254232 ns/op	         8.488 GFLOPS	       505.9 tok/s	        16.00 workers	  146799 B/op	     178 allocs/op
+BenchmarkParallelForward_medium_b32/ParallelZeroCopy-16         	      19	  63731386 ns/op	         8.424 GFLOPS	       502.1 tok/s	        16.00 workers	   15603 B/op	     171 allocs/op
+BenchmarkQSMoEForward-16                                        	     100	  10098393 ns/op	  752851 B/op	    1415 allocs/op
+BenchmarkQSMoEForwardLarge-16                                   	       7	 163165569 ns/op	 5629200 B/op	    4871 allocs/op
+BenchmarkWorkspaceForward_medium_b32-16                         	       4	 285546827 ns/op	         1.880 GFLOPS	   13056 B/op	     145 allocs/op
+PASS
+ok  	github.com/phenomenon0/Agent-GO/foundation_models	14.052s
+run_status=PASS index=1
+phase=run index=2
+command=go test -run '^$' -benchmem -benchtime=1s -count=1 -timeout=30m -bench 'Benchmark(QSMoEForward|QSMoEForwardLarge|ParallelForward_medium_b32|WorkspaceForward_medium_b32)$' ./foundation_models
+goos: linux
+goarch: amd64
+pkg: github.com/phenomenon0/Agent-GO/foundation_models
+cpu: AMD Ryzen 7 7700X 8-Core Processor             
+BenchmarkParallelForward_medium_b32/Serial-16         	       3	 338464077 ns/op	         1.586 GFLOPS	        94.54 tok/s	   14208 B/op	     150 allocs/op
+BenchmarkParallelForward_medium_b32/Parallel-16       	      18	  69524371 ns/op	         7.722 GFLOPS	       460.3 tok/s	        16.00 workers	  146985 B/op	     179 allocs/op
+BenchmarkParallelForward_medium_b32/ParallelZeroCopy-16         	      18	  65219630 ns/op	         8.232 GFLOPS	       490.6 tok/s	        16.00 workers	   14705 B/op	     168 allocs/op
+BenchmarkQSMoEForward-16                                        	     100	  10007928 ns/op	  752850 B/op	    1415 allocs/op
+BenchmarkQSMoEForwardLarge-16                                   	       7	 160685657 ns/op	 5629200 B/op	    4871 allocs/op
+BenchmarkWorkspaceForward_medium_b32-16                         	       4	 296687007 ns/op	         1.810 GFLOPS	   12160 B/op	     143 allocs/op
+PASS
+ok  	github.com/phenomenon0/Agent-GO/foundation_models	11.817s
+run_status=PASS index=2
+phase=run index=3
+command=go test -run '^$' -benchmem -benchtime=1s -count=1 -timeout=30m -bench 'Benchmark(QSMoEForward|QSMoEForwardLarge|ParallelForward_medium_b32|WorkspaceForward_medium_b32)$' ./foundation_models
+goos: linux
+goarch: amd64
+pkg: github.com/phenomenon0/Agent-GO/foundation_models
+cpu: AMD Ryzen 7 7700X 8-Core Processor             
+BenchmarkParallelForward_medium_b32/Serial-16         	       3	 338129440 ns/op	         1.588 GFLOPS	        94.64 tok/s	   15936 B/op	     153 allocs/op
+BenchmarkParallelForward_medium_b32/Parallel-16       	      18	  62127602 ns/op	         8.641 GFLOPS	       515.1 tok/s	        16.00 workers	  146603 B/op	     178 allocs/op
+BenchmarkParallelForward_medium_b32/ParallelZeroCopy-16         	      18	  62949894 ns/op	         8.529 GFLOPS	       508.3 tok/s	        16.00 workers	   15037 B/op	     169 allocs/op
+BenchmarkQSMoEForward-16                                        	     121	  10193235 ns/op	  752851 B/op	    1415 allocs/op
+BenchmarkQSMoEForwardLarge-16                                   	       7	 165286435 ns/op	 5629200 B/op	    4871 allocs/op
+BenchmarkWorkspaceForward_medium_b32-16                         	       4	 286479876 ns/op	         1.874 GFLOPS	   13504 B/op	     146 allocs/op
+PASS
+ok  	github.com/phenomenon0/Agent-GO/foundation_models	12.924s
+run_status=PASS index=3
+phase=run index=4
+command=go test -run '^$' -benchmem -benchtime=1s -count=1 -timeout=30m -bench 'Benchmark(QSMoEForward|QSMoEForwardLarge|ParallelForward_medium_b32|WorkspaceForward_medium_b32)$' ./foundation_models
+goos: linux
+goarch: amd64
+pkg: github.com/phenomenon0/Agent-GO/foundation_models
+cpu: AMD Ryzen 7 7700X 8-Core Processor             
+BenchmarkParallelForward_medium_b32/Serial-16         	       3	 339578206 ns/op	         1.581 GFLOPS	        94.23 tok/s	   15669 B/op	     153 allocs/op
+BenchmarkParallelForward_medium_b32/Parallel-16       	      18	  66021334 ns/op	         8.132 GFLOPS	       484.7 tok/s	        16.00 workers	  148024 B/op	     181 allocs/op
+BenchmarkParallelForward_medium_b32/ParallelZeroCopy-16         	      16	  64417469 ns/op	         8.334 GFLOPS	       496.8 tok/s	        16.00 workers	   13961 B/op	     167 allocs/op
+BenchmarkQSMoEForward-16                                        	     123	   9662496 ns/op	  752850 B/op	    1415 allocs/op
+BenchmarkQSMoEForwardLarge-16                                   	       7	 157753337 ns/op	 5629213 B/op	    4871 allocs/op
+BenchmarkWorkspaceForward_medium_b32-16                         	       4	 295964249 ns/op	         1.814 GFLOPS	   14624 B/op	     149 allocs/op
+PASS
+ok  	github.com/phenomenon0/Agent-GO/foundation_models	12.690s
+run_status=PASS index=4
+phase=run index=5
+command=go test -run '^$' -benchmem -benchtime=1s -count=1 -timeout=30m -bench 'Benchmark(QSMoEForward|QSMoEForwardLarge|ParallelForward_medium_b32|WorkspaceForward_medium_b32)$' ./foundation_models
+goos: linux
+goarch: amd64
+pkg: github.com/phenomenon0/Agent-GO/foundation_models
+cpu: AMD Ryzen 7 7700X 8-Core Processor             
+BenchmarkParallelForward_medium_b32/Serial-16         	       4	 323167007 ns/op	         1.661 GFLOPS	        99.02 tok/s	   11992 B/op	     145 allocs/op
+BenchmarkParallelForward_medium_b32/Parallel-16       	      19	  63985293 ns/op	         8.391 GFLOPS	       500.1 tok/s	        16.00 workers	  147647 B/op	     180 allocs/op
+BenchmarkParallelForward_medium_b32/ParallelZeroCopy-16         	      18	  65175504 ns/op	         8.237 GFLOPS	       491.0 tok/s	        16.00 workers	   14318 B/op	     168 allocs/op
+BenchmarkQSMoEForward-16                                        	     114	  10085947 ns/op	  752852 B/op	    1415 allocs/op
+BenchmarkQSMoEForwardLarge-16                                   	       7	 157440169 ns/op	 5629200 B/op	    4871 allocs/op
+BenchmarkWorkspaceForward_medium_b32-16                         	       4	 294873380 ns/op	         1.821 GFLOPS	   14512 B/op	     148 allocs/op
+PASS
+ok  	github.com/phenomenon0/Agent-GO/foundation_models	13.925s
+run_status=PASS index=5
+coverage BenchmarkParallelForward_medium_b32/Serial=5/5
+coverage BenchmarkParallelForward_medium_b32/Parallel=5/5
+coverage BenchmarkParallelForward_medium_b32/ParallelZeroCopy=5/5
+coverage BenchmarkQSMoEForward=5/5
+coverage BenchmarkQSMoEForwardLarge=5/5
+coverage BenchmarkWorkspaceForward_medium_b32=5/5
+PERF_MULTI_RUN_STATUS=PASS

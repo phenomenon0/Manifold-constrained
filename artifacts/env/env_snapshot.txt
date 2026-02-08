@@ -1,0 +1,12 @@
+timestamp_utc: 2026-02-07T01:35:34Z
+cwd: /home/omen/Documents/Project/Agent-GO
+hostname: fedora
+kernel: Linux 6.17.12-300.fc43.x86_64 x86_64 GNU/Linux
+go_version: go version go1.25.5 X:nodwarf5 linux/amd64
+git_commit: c05f70df9cd00c190758342faeaad2803624f6f7
+git_branch: main
+cpu_model: AMD Ryzen 7 7700X 8-Core Processor
+cpu_cores: 16
+memory_mib: 31184
+gpu_info:
+nvidia-smi unavailable

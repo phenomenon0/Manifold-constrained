@@ -1,0 +1,117 @@
+timestamp_utc=2026-02-07T01:36:56Z
+track=TrackT
+phase=precheck
+artifact=FOUND path=examples/toy_mcqsmoe/exports/moe_v2_optimized/manifest.json
+artifact=FOUND path=examples/toy_mcqsmoe/exports/run_001/manifest.json
+artifact=FOUND path=examples/toy_mcqsmoe/exports/proof/manifest.json
+artifact=FOUND path=examples/toy_mcqsmoe/exports/proof/golden/golden_manifest.json
+artifact=FOUND path=testdata/golden_qmln.shard
+phase=test
+command=go test -v -count=1 -shuffle=off -timeout=30m -run 'Test(LoadExportedModel|ExportedModelInference|ImportRealPyTorchExport|ImportFullFFN|GoldenPyTorchComparison|ManifoldInvariants|GoldenDeterminism|E2EPyTorchGolden)$' ./foundation_models
+=== RUN   TestE2EPyTorchGolden
+    e2e_test.go:51: Layer config: QMLN[64x64] bits=4 group=64 manifold=sphere_rows
+    e2e_test.go:52: Anchor bytes: 8192, DeltaQ bytes: 2048, Scales bytes: 128
+    e2e_test.go:97: First 4 reconstructed values: [0.009345, 0.012545, 0.015745, 0.018941]
+--- PASS: TestE2EPyTorchGolden (0.00s)
+=== RUN   TestGoldenPyTorchComparison
+    golden_pytorch_test.go:171: Golden config: batch=32, d_model=256, E=4, top_k=2, activation=gelu_tanh
+    golden_pytorch_test.go:192: Loaded inputs: x[8192], topk_idx[64], topk_w[64]
+=== RUN   TestGoldenPyTorchComparison/layer_0
+    golden_pytorch_test.go:241: Error stats: max_abs=0.000732, mean_abs=0.000147, rmse=0.000185, nrmse=0.0002 (0.02%), rms_pt=0.987922, worst_idx=7501
+    golden_pytorch_test.go:272: PASS: All thresholds met
+=== RUN   TestGoldenPyTorchComparison/layer_5
+    golden_pytorch_test.go:241: Error stats: max_abs=0.000784, mean_abs=0.000143, rmse=0.000182, nrmse=0.0002 (0.02%), rms_pt=0.851102, worst_idx=1163
+    golden_pytorch_test.go:272: PASS: All thresholds met
+--- PASS: TestGoldenPyTorchComparison (0.09s)
+    --- PASS: TestGoldenPyTorchComparison/layer_0 (0.04s)
+    --- PASS: TestGoldenPyTorchComparison/layer_5 (0.03s)
+=== RUN   TestManifoldInvariants
+=== RUN   TestManifoldInvariants/layer_0
+    golden_pytorch_test.go:314: up_anchor: max_norm_err=0.000069, down_anchor: max_norm_err=0.000024
+=== RUN   TestManifoldInvariants/layer_1
+    golden_pytorch_test.go:314: up_anchor: max_norm_err=0.000058, down_anchor: max_norm_err=0.000029
+=== RUN   TestManifoldInvariants/layer_2
+    golden_pytorch_test.go:314: up_anchor: max_norm_err=0.000059, down_anchor: max_norm_err=0.000037
+=== RUN   TestManifoldInvariants/layer_3
+    golden_pytorch_test.go:314: up_anchor: max_norm_err=0.000064, down_anchor: max_norm_err=0.000034
+=== RUN   TestManifoldInvariants/layer_4
+    golden_pytorch_test.go:314: up_anchor: max_norm_err=0.000058, down_anchor: max_norm_err=0.000032
+=== RUN   TestManifoldInvariants/layer_5
+    golden_pytorch_test.go:314: up_anchor: max_norm_err=0.000062, down_anchor: max_norm_err=0.000028
+--- PASS: TestManifoldInvariants (0.01s)
+    --- PASS: TestManifoldInvariants/layer_0 (0.00s)
+    --- PASS: TestManifoldInvariants/layer_1 (0.00s)
+    --- PASS: TestManifoldInvariants/layer_2 (0.00s)
+    --- PASS: TestManifoldInvariants/layer_3 (0.00s)
+    --- PASS: TestManifoldInvariants/layer_4 (0.00s)
+    --- PASS: TestManifoldInvariants/layer_5 (0.00s)
+=== RUN   TestGoldenDeterminism
+    golden_pytorch_test.go:420: PASS: 10 runs produced identical output
+--- PASS: TestGoldenDeterminism (0.34s)
+=== RUN   TestLoadExportedModel
+    import_manifest_test.go:24: Loaded model:
+    import_manifest_test.go:25:   Format: moev2_export_v1
+    import_manifest_test.go:26:   Training PPL: 8.66
+    import_manifest_test.go:27:   d_model=256, d_ff=1024, E=4, layers=6
+    import_manifest_test.go:36:   Layer 0: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_manifest_test.go:36:   Layer 1: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_manifest_test.go:36:   Layer 2: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_manifest_test.go:36:   Layer 3: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_manifest_test.go:36:   Layer 4: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_manifest_test.go:36:   Layer 5: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_manifest_test.go:44: Total model memory: 12672 KiB (12.4 MiB)
+--- PASS: TestLoadExportedModel (0.01s)
+=== RUN   TestExportedModelInference
+    import_manifest_test.go:110: Inference OK: batch=32, output range [-2.2787, 2.2751]
+--- PASS: TestExportedModelInference (0.04s)
+=== RUN   TestImportRealPyTorchExport
+    import_pytorch_test.go:674: Model: d_model=256, d_ff=1024, n_layers=6, num_experts=4
+    import_pytorch_test.go:678: Training: final_ppl=8.70, best_ppl=8.72
+    import_pytorch_test.go:688: Imported 6 layers
+    import_pytorch_test.go:692: Layer 0: MoELayerV2[1024x256] experts=4 manifold=sphere_rows savings=2.50x memory=1056KB
+    import_pytorch_test.go:702:   Stats: MoE[layer_0] 1024x256 E=4 bits=4 group=64 | anchor=512KB delta=512KB total=1056KB (2.5x savings)
+    import_pytorch_test.go:725:   ForwardAnchor: output L2 = 12.9595
+    import_pytorch_test.go:746:   Expert 0 row norms: [1.0000, 1.0000]
+    import_pytorch_test.go:692: Layer 1: MoELayerV2[1024x256] experts=4 manifold=sphere_rows savings=2.50x memory=1056KB
+    import_pytorch_test.go:702:   Stats: MoE[layer_1] 1024x256 E=4 bits=4 group=64 | anchor=512KB delta=512KB total=1056KB (2.5x savings)
+    import_pytorch_test.go:725:   ForwardAnchor: output L2 = 13.0271
+    import_pytorch_test.go:746:   Expert 0 row norms: [1.0000, 1.0000]
+    import_pytorch_test.go:692: Layer 2: MoELayerV2[1024x256] experts=4 manifold=sphere_rows savings=2.50x memory=1056KB
+    import_pytorch_test.go:702:   Stats: MoE[layer_2] 1024x256 E=4 bits=4 group=64 | anchor=512KB delta=512KB total=1056KB (2.5x savings)
+    import_pytorch_test.go:725:   ForwardAnchor: output L2 = 12.8705
+    import_pytorch_test.go:746:   Expert 0 row norms: [1.0000, 1.0000]
+    import_pytorch_test.go:692: Layer 3: MoELayerV2[1024x256] experts=4 manifold=sphere_rows savings=2.50x memory=1056KB
+    import_pytorch_test.go:702:   Stats: MoE[layer_3] 1024x256 E=4 bits=4 group=64 | anchor=512KB delta=512KB total=1056KB (2.5x savings)
+    import_pytorch_test.go:725:   ForwardAnchor: output L2 = 12.8237
+    import_pytorch_test.go:746:   Expert 0 row norms: [1.0000, 1.0000]
+    import_pytorch_test.go:692: Layer 4: MoELayerV2[1024x256] experts=4 manifold=sphere_rows savings=2.50x memory=1056KB
+    import_pytorch_test.go:702:   Stats: MoE[layer_4] 1024x256 E=4 bits=4 group=64 | anchor=512KB delta=512KB total=1056KB (2.5x savings)
+    import_pytorch_test.go:725:   ForwardAnchor: output L2 = 12.6214
+    import_pytorch_test.go:746:   Expert 0 row norms: [1.0000, 1.0000]
+    import_pytorch_test.go:692: Layer 5: MoELayerV2[1024x256] experts=4 manifold=sphere_rows savings=2.50x memory=1056KB
+    import_pytorch_test.go:702:   Stats: MoE[layer_5] 1024x256 E=4 bits=4 group=64 | anchor=512KB delta=512KB total=1056KB (2.5x savings)
+    import_pytorch_test.go:725:   ForwardAnchor: output L2 = 12.5367
+    import_pytorch_test.go:746:   Expert 0 row norms: [1.0000, 1.0000]
+    import_pytorch_test.go:787: Batched forward (layer 0): output L2 = 29.2964
+--- PASS: TestImportRealPyTorchExport (0.03s)
+=== RUN   TestImportFullFFN
+    import_pytorch_test.go:872: Model: d_model=256, d_ff=1024, n_layers=6, num_experts=4
+    import_pytorch_test.go:886: Imported 6 FFN layers
+    import_pytorch_test.go:891: Layer 0: MoEFFN[layer_0] d_model=256 d_ff=1024 E=4 | 2112KiB (1.94x savings)
+    import_pytorch_test.go:892:   Memory: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_pytorch_test.go:891: Layer 1: MoEFFN[layer_1] d_model=256 d_ff=1024 E=4 | 2112KiB (1.94x savings)
+    import_pytorch_test.go:892:   Memory: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_pytorch_test.go:891: Layer 2: MoEFFN[layer_2] d_model=256 d_ff=1024 E=4 | 2112KiB (1.94x savings)
+    import_pytorch_test.go:892:   Memory: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_pytorch_test.go:891: Layer 3: MoEFFN[layer_3] d_model=256 d_ff=1024 E=4 | 2112KiB (1.94x savings)
+    import_pytorch_test.go:892:   Memory: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_pytorch_test.go:891: Layer 4: MoEFFN[layer_4] d_model=256 d_ff=1024 E=4 | 2112KiB (1.94x savings)
+    import_pytorch_test.go:892:   Memory: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_pytorch_test.go:891: Layer 5: MoEFFN[layer_5] d_model=256 d_ff=1024 E=4 | 2112KiB (1.94x savings)
+    import_pytorch_test.go:892:   Memory: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_pytorch_test.go:940: Single expert forward: output L2 = 5.9105
+    import_pytorch_test.go:962: Batched forward: output L2 = 5.8774
+--- PASS: TestImportFullFFN (0.03s)
+PASS
+ok  	github.com/phenomenon0/Agent-GO/foundation_models	0.548s
+TRACK_T_STATUS=PASS

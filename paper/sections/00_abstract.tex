@@ -1,0 +1,20 @@
+\begin{abstract}
+This paper presents an arXiv-style rigor package for MCQSMoE, centered on
+reproducible claim validation rather than SOTA benchmarking claims.
+The protocol defines five strict tracks: quality/correctness (Q), multi-seed
+quality robustness (QS), performance (P), multi-run performance statistics
+(PS), and trained-artifact parity (T). On the run snapshot dated
+2026-02-07, all gates pass: 6/6 quality tests pass, all 5 configured QS seeds
+pass, performance benchmarks are captured, 5-run statistical aggregation passes,
+and Track T parity passes with no skips. Canonical multi-run results show
+\texttt{BenchmarkParallelForward\_medium\_b32/Parallel} at 493.22 tok/s and
+\texttt{ParallelZeroCopy} at 497.76 tok/s versus 96.30 tok/s for serial,
+corresponding to 5.12x and 5.17x throughput speedups in this benchmark setting.
+Track T reports tight golden parity for tested layers (max absolute error
+\(\le 7.84\times10^{-4}\), NRMSE \(\approx 0.02\%\)) and deterministic
+replay across 10 runs. We release protocol docs, execution scripts,
+frozen artifacts, supervisor critiques, and an arXiv manuscript template in one
+GitHub-ready bundle. We also state non-claims explicitly: no matched dense
+baseline under equal budget yet, no external task leaderboard, and no hardware
+noise pinning.
+\end{abstract}

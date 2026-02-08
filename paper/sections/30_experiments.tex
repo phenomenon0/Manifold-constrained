@@ -1,0 +1,22 @@
+\section{Experimental Setup}
+\subsection{Environment}
+Environment metadata comes from \texttt{artifacts/env/env\_snapshot.txt}:
+Linux 6.17.12, Go 1.25.5, CPU AMD Ryzen 7 7700X (16 logical cores),
+31,184 MiB RAM. GPU metadata is unavailable in this snapshot.
+
+\subsection{Commands and Seeds}
+The canonical runner is:
+\begin{verbatim}
+./foundation_models/paper_mcsqoe/scripts/40_run_all.sh
+\end{verbatim}
+Track QS seeds are fixed at: \texttt{11 23 47 101 211}.
+Track PS uses \(n=5\) repeated benchmark runs with 95\% CI computed as
+\(1.96\cdot\sigma/\sqrt{n}\).
+
+\subsection{Evaluation Scope}
+Measured outcomes in this paper are strictly:
+internal correctness, deterministic behavior on defined tests, and benchmark
+throughput/latency behavior for selected paths.
+No external task leaderboard claim is made.
+
+\input{figures/claim_boundary}

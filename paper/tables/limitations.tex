@@ -1,0 +1,31 @@
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{p{0.28\linewidth}p{0.28\linewidth}p{0.34\linewidth}}
+\toprule
+Limitation & Current Impact & Required Upgrade \\
+\midrule
+No matched dense baseline under equal budget
+& Throughput claims are benchmark-local, not fair end-to-end superiority
+& Add dense baseline with same parameter/FLOP envelope \\
+
+No external task-level benchmark table
+& No public quality leaderboard claim is supported
+& Add fixed evaluation harness and report external metrics \\
+
+Robustness seeds only shuffle test order
+& Limited signal on model/data stochastic stability
+& Add randomness controls for model init/data order \\
+
+n=5 CI with normal approximation
+& Variance estimates may be optimistic on noisy hardware
+& Increase sample count and/or use small-sample robust reporting \\
+
+Hardware-state controls not pinned
+& Bench variance can drift with thermal and scheduler noise
+& Add governor/thermal pinning and multi-time-window repeats \\
+\bottomrule
+\end{tabular}
+\caption{Known gaps and mitigation path before broader claims.}
+\label{tab:limitations}
+\end{table*}
