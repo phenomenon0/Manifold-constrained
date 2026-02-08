@@ -1,0 +1,15 @@
+\begin{table}[t]
+\centering
+\small
+\begin{tabular}{lrrr}
+\toprule
+Case & QSMoE ns/op & Dense Matched ns/op & Dense/QSMoE \\
+\midrule
+small & 9,547,720 & 11,882,241 & 1.2445x \\
+large & 161,906,128 & 187,976,900 & 1.1610x \\
+\bottomrule
+\end{tabular}
+\caption{Dense baseline under matched parameter/compute budget
+from \texttt{artifacts/reports/dense\_baseline\_summary.md}.}
+\label{tab:dense_baseline}
+\end{table}

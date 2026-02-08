@@ -1,0 +1,7 @@
+timestamp_utc=2026-02-08T11:25:47Z
+dataset=mmlu-tiny
+seed=424242
+command=go run ./foundation_models/paper_mcsqoe/cmd/external_eval -output foundation_models/paper_mcsqoe/results/external_eval -dataset mmlu-tiny -seed 424242
+Wrote foundation_models/paper_mcsqoe/results/external_eval/summary.json
+Wrote foundation_models/paper_mcsqoe/results/external_eval/summary.md
+EXTERNAL_EVAL_STATUS=PASS

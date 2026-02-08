@@ -1,0 +1,34 @@
+{
+  "timestamp_utc": "2026-02-08T11:25:51Z",
+  "dataset": "mmlu-tiny",
+  "seed": 424242,
+  "models": [
+    {
+      "name": "ar_baseline",
+      "num_samples": 100,
+      "accuracy": 0.52,
+      "ece": 0.08435451179338942,
+      "brier": 0.2091121589112961,
+      "auroc": 0.2822774587985114,
+      "confident_wrong_0_8": 0.15384615384615385
+    },
+    {
+      "name": "diffusion_baseline",
+      "num_samples": 100,
+      "accuracy": 0.35,
+      "ece": 0.6491690741586578,
+      "brier": 0.64892470867986,
+      "auroc": 0.6872562276904383,
+      "confident_wrong_0_8": 0.65
+    },
+    {
+      "name": "self_consistency",
+      "num_samples": 100,
+      "accuracy": 0.65,
+      "ece": 0.11624999999999999,
+      "brier": 0.18109375,
+      "auroc": 0.15911532619427357,
+      "confident_wrong_0_8": 0
+    }
+  ]
+}

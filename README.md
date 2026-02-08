@@ -14,6 +14,10 @@ It packages:
 This bundle proves internal rigor for the claim set in `protocol/PROTOCOL.md`.
 It does **not** claim SOTA quality on public task benchmarks yet.
 
+Current protocol adds two critic-driven upgrades:
+- `Track DB`: dense matched baseline under aligned parameter/compute budget.
+- `Track X`: external-style MCQA harness snapshot (`mmlu-tiny`) with fixed seed.
+
 ## Reproduce The Current Artifact Set
 
 From repository root (`Agent-GO`):
@@ -39,6 +43,24 @@ bibtex main
 pdflatex main.tex
 pdflatex main.tex
 ```
+
+## Publish As Standalone Repo
+
+From `Agent-GO` root, create a split branch containing only this bundle:
+
+```bash
+./foundation_models/paper_mcsqoe/github_release/scripts/subtree_publish.sh
+```
+
+Push directly to a target GitHub repo (URL or configured remote name both work):
+
+```bash
+./foundation_models/paper_mcsqoe/github_release/scripts/subtree_publish.sh \
+  --remote git@github.com:YOUR_ORG/mcsqoe-paper-release.git \
+  --remote-branch main
+```
+
+If `git subtree` is unavailable on your machine, the helper prints an equivalent `git-filter-repo` fallback sequence.
 
 ## Directory Map
 

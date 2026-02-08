@@ -42,7 +42,25 @@ cd Agent-GO
 - Evidence:
 - Artifact:
 
-## 6. Statistical Notes
+## 6. Dense Baseline Parity
+
+- Dense baseline status:
+- Small-case dense/QSMoE speedup:
+- Large-case dense/QSMoE speedup:
+- Artifacts:
+  - `foundation_models/paper_mcsqoe/results/logs/dense_baseline.log`
+  - `foundation_models/paper_mcsqoe/results/dense_baseline_summary.md`
+
+## 7. External Harness Snapshot
+
+- External eval status:
+- Dataset:
+- Model rows captured:
+- Artifact:
+  - `foundation_models/paper_mcsqoe/results/logs/external_eval.log`
+  - `foundation_models/paper_mcsqoe/results/external_eval/summary.md`
+
+## 8. Statistical Notes
 
 - Quality multi-seed status:
 - Quality seed set:
@@ -54,12 +72,12 @@ cd Agent-GO
   - `foundation_models/paper_mcsqoe/results/logs/perf_multirun.log`
   - `foundation_models/paper_mcsqoe/results/perf_multirun_summary.md`
 
-## 7. Limitations
+## 9. Limitations
 
 - Known gaps:
 - External validity notes:
 
-## 8. Reproducibility
+## 10. Reproducibility
 
 - Env snapshot: `foundation_models/paper_mcsqoe/results/env_snapshot.txt`
 - Summary: `foundation_models/paper_mcsqoe/results/summary.md`

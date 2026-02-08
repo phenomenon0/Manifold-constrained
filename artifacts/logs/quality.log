@@ -1,4 +1,4 @@
-timestamp_utc=2026-02-07T01:35:34Z
+timestamp_utc=2026-02-08T11:24:13Z
 command=go test -v -count=1 -shuffle=off -timeout=20m -run 'TestQSMoE(LayerCreation|ForwardBasic|RoutingDeterminism|Specialization|AuditEntropy|CombineMethods)$' ./foundation_models
 === RUN   TestQSMoELayerCreation
 --- PASS: TestQSMoELayerCreation (0.00s)

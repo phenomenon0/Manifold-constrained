@@ -78,6 +78,20 @@ Primary outputs:
 - `results/perf_multirun_summary.md`
 - strict status (`PERF_MULTI_RUN_STATUS`)
 
+### Track DB: Dense Matched Baseline
+
+- Run QSMoE and dense matched baselines under a matched parameter/compute setup:
+- `BenchmarkQSMoEForward`
+- `BenchmarkQSMoEForwardLarge`
+- `BenchmarkDenseMatchedForward`
+- `BenchmarkDenseMatchedForwardLarge`
+
+Primary outputs:
+- `results/logs/dense_baseline.log`
+- `results/dense_baseline_summary.md`
+- `results/dense_baseline_summary.json`
+- strict status (`DENSE_BASELINE_STATUS`)
+
 ### Track T: Trained-Artifact Parity Gate
 
 - Purpose: prevent paper-parity claims when trained/exported artifacts are absent.
@@ -103,17 +117,33 @@ Primary outputs:
 - any skip in Track T run => FAIL
 - all required tests pass with no skips => PASS
 
+### Track X: External Evaluation Harness
+
+- Run a fixed external-style MCQA harness using `diffusion_jeep` on `mmlu-tiny`.
+- Evaluate baseline models with fixed seed:
+- `ar_baseline`
+- `diffusion_baseline`
+- `self_consistency`
+
+Primary outputs:
+- `results/logs/external_eval.log`
+- `results/external_eval/summary.md`
+- `results/external_eval/summary.json`
+- strict status (`EXTERNAL_EVAL_STATUS`)
+
 ## Acceptance Gates
 
 1. `Gate A`: quality suite passes fully.
 2. `Gate B`: quality multi-seed suite passes for all configured seeds.
 3. `Gate C`: performance suite completes and emits benchmark lines for all targets.
 4. `Gate D`: performance multi-run suite passes with full target coverage.
-5. `Gate E`: Track T passes (trained artifacts present, no skip, tests pass).
-6. `Gate F`: summary artifacts are generated (`summary.md` and `summary.json`).
+5. `Gate E`: dense matched baseline suite passes with full benchmark coverage.
+6. `Gate F`: Track T passes (trained artifacts present, no skip, tests pass).
+7. `Gate G`: external evaluation harness writes complete summary artifacts.
+8. `Gate H`: summary artifacts are generated (`summary.md` and `summary.json`).
 
 ## Known Current Gaps (to close next)
 
-1. Matched dense-vs-MCQSMoE baseline under identical parameter budget.
-2. Task-level external benchmark table (pass@1, calibration, robustness) using a fixed evaluation harness.
+1. External benchmark currently uses tiny synthetic proxies; add real public leaderboard datasets.
+2. Robustness still focuses on test-order seeds; add model/data stochasticity controls.
 3. Hardware noise controls (thermal/power state pinning) for tighter CI stability.

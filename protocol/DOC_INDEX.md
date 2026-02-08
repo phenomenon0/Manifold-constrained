@@ -34,9 +34,16 @@ This index groups the most relevant local docs for MCQSMoE paper-rigor work.
 - `foundation_models/paper_mcsqoe/scripts/15_quality_multiseed_suite.sh`
 - `foundation_models/paper_mcsqoe/scripts/20_perf_suite.sh`
 - `foundation_models/paper_mcsqoe/scripts/22_perf_multirun_ci_suite.sh`
+- `foundation_models/paper_mcsqoe/scripts/23_dense_baseline_suite.sh`
 - `foundation_models/paper_mcsqoe/scripts/25_track_t_artifact_suite.sh`
+- `foundation_models/paper_mcsqoe/scripts/26_external_eval_suite.sh`
 - `foundation_models/paper_mcsqoe/scripts/30_collect_summary.sh`
 - `foundation_models/paper_mcsqoe/scripts/40_run_all.sh`
+
+## New Baseline + Harness Code
+
+- `foundation_models/dense_matched_benchmark_test.go`
+- `foundation_models/paper_mcsqoe/cmd/external_eval/main.go`
 
 ## VelvetMD
 

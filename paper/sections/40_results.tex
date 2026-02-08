@@ -1,13 +1,19 @@
 \section{Results}
 \subsection{Gate Status}
-From \texttt{artifacts/reports/summary.md} (timestamp 2026-02-07T01:36:56Z):
-Q=PASS, QS=PASS (5 seeds), P=PASS, PS=PASS (5 runs), T=PASS.
+From \texttt{artifacts/reports/summary.md} (timestamp 2026-02-08T11:18:16Z):
+Q=PASS, QS=PASS (5 seeds), P=PASS, PS=PASS (5 runs), DB=PASS, T=PASS, X=PASS.
 
 \subsection{Performance (Canonical Multi-Run Statistics)}
 \input{tables/perf_multirun}
 
 Relative to serial in the same benchmark family, mean throughput improves by
-5.12x for \texttt{Parallel} and 5.17x for \texttt{ParallelZeroCopy}.
+5.00x for \texttt{Parallel} and 5.15x for \texttt{ParallelZeroCopy}.
+
+\subsection{Dense Matched Baseline}
+\input{tables/dense_baseline}
+
+\subsection{External Harness Snapshot}
+\input{tables/external_eval}
 
 \subsection{Parity and Correctness}
 \input{tables/track_t_parity}

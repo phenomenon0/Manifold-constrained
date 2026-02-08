@@ -1,4 +1,4 @@
-timestamp_utc=2026-02-07T01:36:56Z
+timestamp_utc=2026-02-08T11:25:47Z
 track=TrackT
 phase=precheck
 artifact=FOUND path=examples/toy_mcqsmoe/exports/moe_v2_optimized/manifest.json
@@ -49,20 +49,20 @@ command=go test -v -count=1 -shuffle=off -timeout=30m -run 'Test(LoadExportedMod
     golden_pytorch_test.go:420: PASS: 10 runs produced identical output
 --- PASS: TestGoldenDeterminism (0.34s)
 === RUN   TestLoadExportedModel
-    import_manifest_test.go:24: Loaded model:
-    import_manifest_test.go:25:   Format: moev2_export_v1
-    import_manifest_test.go:26:   Training PPL: 8.66
-    import_manifest_test.go:27:   d_model=256, d_ff=1024, E=4, layers=6
-    import_manifest_test.go:36:   Layer 0: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
-    import_manifest_test.go:36:   Layer 1: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
-    import_manifest_test.go:36:   Layer 2: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
-    import_manifest_test.go:36:   Layer 3: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
-    import_manifest_test.go:36:   Layer 4: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
-    import_manifest_test.go:36:   Layer 5: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
-    import_manifest_test.go:44: Total model memory: 12672 KiB (12.4 MiB)
---- PASS: TestLoadExportedModel (0.01s)
+    import_manifest_test.go:26: Loaded model:
+    import_manifest_test.go:27:   Format: moev2_export_v1
+    import_manifest_test.go:28:   Training PPL: 8.66
+    import_manifest_test.go:29:   d_model=256, d_ff=1024, E=4, layers=6
+    import_manifest_test.go:38:   Layer 0: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_manifest_test.go:38:   Layer 1: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_manifest_test.go:38:   Layer 2: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_manifest_test.go:38:   Layer 3: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_manifest_test.go:38:   Layer 4: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_manifest_test.go:38:   Layer 5: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
+    import_manifest_test.go:46: Total model memory: 12672 KiB (12.4 MiB)
+--- PASS: TestLoadExportedModel (0.02s)
 === RUN   TestExportedModelInference
-    import_manifest_test.go:110: Inference OK: batch=32, output range [-2.2787, 2.2751]
+    import_manifest_test.go:112: Inference OK: batch=32, output range [-2.2787, 2.2751]
 --- PASS: TestExportedModelInference (0.04s)
 === RUN   TestImportRealPyTorchExport
     import_pytorch_test.go:674: Model: d_model=256, d_ff=1024, n_layers=6, num_experts=4
@@ -111,7 +111,7 @@ command=go test -v -count=1 -shuffle=off -timeout=30m -run 'Test(LoadExportedMod
     import_pytorch_test.go:892:   Memory: up[anchor=512KiB delta=512KiB scales=32KiB] down[anchor=512KiB delta=512KiB scales=32KiB] total=2112KiB naive=4096KiB savings=1.94x
     import_pytorch_test.go:940: Single expert forward: output L2 = 5.9105
     import_pytorch_test.go:962: Batched forward: output L2 = 5.8774
---- PASS: TestImportFullFFN (0.03s)
+--- PASS: TestImportFullFFN (0.04s)
 PASS
-ok  	github.com/phenomenon0/Agent-GO/foundation_models	0.548s
+ok  	github.com/phenomenon0/Agent-GO/foundation_models	0.561s
 TRACK_T_STATUS=PASS

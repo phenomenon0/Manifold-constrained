@@ -1,0 +1,14 @@
+{
+  "timestamp_utc": "2026-02-08T11:25:47Z",
+  "q_small_ns_per_op": 9384330,
+  "dense_small_ns_per_op": 11443170,
+  "q_large_ns_per_op": 153667814,
+  "dense_large_ns_per_op": 185456935,
+  "speedup_small_dense_over_q": 1.2194,
+  "speedup_large_dense_over_q": 1.2069,
+  "artifacts": {
+    "log": "foundation_models/paper_mcsqoe/results/logs/dense_baseline.log",
+    "summary_md": "foundation_models/paper_mcsqoe/results/dense_baseline_summary.md",
+    "summary_json": "foundation_models/paper_mcsqoe/results/dense_baseline_summary.json"
+  }
+}

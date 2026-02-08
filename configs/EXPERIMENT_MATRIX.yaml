@@ -43,11 +43,27 @@ tracks:
       - "results/perf_multirun_stats.csv"
       - "results/perf_multirun_summary.md"
 
+  - id: dense_matched_baseline
+    description: "Dense baseline under matched parameter/compute budget for QSMoE forward paths"
+    command: "./foundation_models/paper_mcsqoe/scripts/23_dense_baseline_suite.sh"
+    artifacts:
+      - "results/logs/dense_baseline.log"
+      - "results/dense_baseline_summary.md"
+      - "results/dense_baseline_summary.json"
+
   - id: trained_artifact_gate
     description: "Strict artifact-dependent parity tests (fails if exports are missing or skipped)"
     command: "./foundation_models/paper_mcsqoe/scripts/25_track_t_artifact_suite.sh"
     artifacts:
       - "results/logs/track_t.log"
+
+  - id: external_eval_harness
+    description: "External benchmark harness execution (tiny MCQA baseline comparison)"
+    command: "./foundation_models/paper_mcsqoe/scripts/26_external_eval_suite.sh"
+    artifacts:
+      - "results/logs/external_eval.log"
+      - "results/external_eval/summary.md"
+      - "results/external_eval/summary.json"
 
   - id: environment_snapshot
     description: "Reproducibility metadata"

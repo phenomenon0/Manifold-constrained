@@ -12,11 +12,14 @@ The canonical runner is:
 Track QS seeds are fixed at: \texttt{11 23 47 101 211}.
 Track PS uses \(n=5\) repeated benchmark runs with 95\% CI computed as
 \(1.96\cdot\sigma/\sqrt{n}\).
+Track DB runs dense-vs-QSMoE matched baseline benchmarks.
+Track X runs a fixed-seed external-style MCQA harness on \texttt{mmlu-tiny}.
 
 \subsection{Evaluation Scope}
 Measured outcomes in this paper are strictly:
 internal correctness, deterministic behavior on defined tests, and benchmark
-throughput/latency behavior for selected paths.
-No external task leaderboard claim is made.
+throughput/latency behavior for selected paths, plus a lightweight external-style
+harness snapshot for baseline calibration/accuracy comparison.
+No public leaderboard superiority claim is made.
 
 \input{figures/claim_boundary}

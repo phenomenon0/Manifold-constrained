@@ -1,14 +1,14 @@
 {
-  "timestamp_utc": "2026-02-07T01:36:56Z",
+  "timestamp_utc": "2026-02-08T11:25:40Z",
   "runs": 5,
   "benchtime": "1s",
   "stats": [
-    {"benchmark":"BenchmarkParallelForward_medium_b32/Parallel","n":5,"mean_ns_per_op":64982566.400000,"std_ns_per_op":2908588.270503,"ci95_ns_per_op":2549490.027830,"mean_tok_s":493.220000,"std_tok_s":21.466066,"ci95_tok_s":18.815837},
-    {"benchmark":"BenchmarkParallelForward_medium_b32/ParallelZeroCopy","n":5,"mean_ns_per_op":64298776.600000,"std_ns_per_op":971098.111105,"ci95_ns_per_op":851205.024587,"mean_tok_s":497.760000,"std_tok_s":7.546721,"ci95_tok_s":6.614993},
-    {"benchmark":"BenchmarkParallelForward_medium_b32/Serial","n":5,"mean_ns_per_op":332476596.800000,"std_ns_per_op":8571390.808376,"ci95_ns_per_op":7513155.303625,"mean_tok_s":96.298000,"std_tok_s":2.507692,"ci95_tok_s":2.198089},
-    {"benchmark":"BenchmarkQSMoEForward","n":5,"mean_ns_per_op":10009599.800000,"std_ns_per_op":204889.517108,"ci95_ns_per_op":179593.580147,"mean_tok_s":null,"std_tok_s":null,"ci95_tok_s":null},
-    {"benchmark":"BenchmarkQSMoEForwardLarge","n":5,"mean_ns_per_op":160866233.400000,"std_ns_per_op":3401682.506216,"ci95_ns_per_op":2981706.182134,"mean_tok_s":null,"std_tok_s":null,"ci95_tok_s":null},
-    {"benchmark":"BenchmarkWorkspaceForward_medium_b32","n":5,"mean_ns_per_op":291910267.800000,"std_ns_per_op":5431725.526504,"ci95_ns_per_op":4761117.344855,"mean_tok_s":null,"std_tok_s":null,"ci95_tok_s":null}
+    {"benchmark":"BenchmarkParallelForward_medium_b32/Parallel","n":5,"mean_ns_per_op":61140659.800000,"std_ns_per_op":818759.392359,"ci95_ns_per_op":717674.250144,"mean_tok_s":523.480000,"std_tok_s":7.131059,"ci95_tok_s":6.250649},
+    {"benchmark":"BenchmarkParallelForward_medium_b32/ParallelZeroCopy","n":5,"mean_ns_per_op":62964948.400000,"std_ns_per_op":2680357.538873,"ci95_ns_per_op":2349436.971082,"mean_tok_s":508.960000,"std_tok_s":21.455605,"ci95_tok_s":18.806667},
+    {"benchmark":"BenchmarkParallelForward_medium_b32/Serial","n":5,"mean_ns_per_op":324008174.200000,"std_ns_per_op":9562130.403147,"ci95_ns_per_op":8381576.847732,"mean_tok_s":98.818000,"std_tok_s":2.870439,"ci95_tok_s":2.516051},
+    {"benchmark":"BenchmarkQSMoEForward","n":5,"mean_ns_per_op":9535480.200000,"std_ns_per_op":303748.863792,"ci95_ns_per_op":266247.618150,"mean_tok_s":null,"std_tok_s":null,"ci95_tok_s":null},
+    {"benchmark":"BenchmarkQSMoEForwardLarge","n":5,"mean_ns_per_op":155058012.000000,"std_ns_per_op":1943352.484635,"ci95_ns_per_op":1703423.557875,"mean_tok_s":null,"std_tok_s":null,"ci95_tok_s":null},
+    {"benchmark":"BenchmarkWorkspaceForward_medium_b32","n":5,"mean_ns_per_op":285124450.200000,"std_ns_per_op":4896489.124749,"ci95_ns_per_op":4291961.953339,"mean_tok_s":null,"std_tok_s":null,"ci95_tok_s":null}
   ],
   "artifacts": {
     "samples_tsv": "foundation_models/paper_mcsqoe/results/perf_multirun_samples.tsv",

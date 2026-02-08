@@ -1,0 +1,13 @@
+timestamp_utc=2026-02-08T11:25:47Z
+command=go test -run '^$' -benchmem -benchtime=1s -count=1 -timeout=30m -bench 'Benchmark(QSMoEForward|QSMoEForwardLarge|DenseMatchedForward|DenseMatchedForwardLarge)$' ./foundation_models
+goos: linux
+goarch: amd64
+pkg: github.com/phenomenon0/Agent-GO/foundation_models
+cpu: AMD Ryzen 7 7700X 8-Core Processor             
+BenchmarkDenseMatchedForward-16         	     100	  11443170 ns/op	         2.932 GFLOPS	      2796 tok/s	       0 B/op	       0 allocs/op
+BenchmarkDenseMatchedForwardLarge-16    	       6	 185456935 ns/op	         2.895 GFLOPS	       345.1 tok/s	       0 B/op	       0 allocs/op
+BenchmarkQSMoEForward-16                	     127	   9384330 ns/op	  752853 B/op	    1415 allocs/op
+BenchmarkQSMoEForwardLarge-16           	       7	 153667814 ns/op	 5629200 B/op	    4871 allocs/op
+PASS
+ok  	github.com/phenomenon0/Agent-GO/foundation_models	6.116s
+DENSE_BASELINE_STATUS=PASS

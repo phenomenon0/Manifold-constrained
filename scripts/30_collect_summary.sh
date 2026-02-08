@@ -9,8 +9,12 @@ perf_log="${results_dir}/logs/perf.log"
 quality_multiseed_log="${results_dir}/logs/quality_multiseed.log"
 perf_multirun_log="${results_dir}/logs/perf_multirun.log"
 track_t_log="${results_dir}/logs/track_t.log"
+dense_baseline_log="${results_dir}/logs/dense_baseline.log"
+external_eval_log="${results_dir}/logs/external_eval.log"
 perf_multirun_md="${results_dir}/perf_multirun_summary.md"
 perf_multirun_csv="${results_dir}/perf_multirun_stats.csv"
+dense_baseline_md="${results_dir}/dense_baseline_summary.md"
+external_eval_md="${results_dir}/external_eval/summary.md"
 summary_md="${results_dir}/summary.md"
 summary_json="${results_dir}/summary.json"
 
@@ -74,6 +78,44 @@ if [[ -f "${perf_multirun_log}" ]]; then
 	perf_multirun_runs="$(rg -n "^phase=run index=" "${perf_multirun_log}" | wc -l | tr -d ' ')"
 fi
 
+dense_baseline_status="NOT_RUN"
+dense_small_speedup="NA"
+dense_large_speedup="NA"
+if [[ -f "${dense_baseline_log}" ]]; then
+	if rg -q "DENSE_BASELINE_STATUS=PASS" "${dense_baseline_log}"; then
+		dense_baseline_status="PASS"
+	elif rg -q "DENSE_BASELINE_STATUS=FAIL" "${dense_baseline_log}"; then
+		dense_baseline_status="FAIL"
+	else
+		dense_baseline_status="UNKNOWN"
+	fi
+fi
+if [[ -f "${dense_baseline_md}" ]]; then
+	ds="$(rg '^- speedup_small_dense_over_q:' "${dense_baseline_md}" | head -n1 | awk '{print $3}')"
+	dl="$(rg '^- speedup_large_dense_over_q:' "${dense_baseline_md}" | head -n1 | awk '{print $3}')"
+	if [[ -n "${ds}" ]]; then
+		dense_small_speedup="${ds}"
+	fi
+	if [[ -n "${dl}" ]]; then
+		dense_large_speedup="${dl}"
+	fi
+fi
+
+external_eval_status="NOT_RUN"
+external_eval_models=0
+if [[ -f "${external_eval_log}" ]]; then
+	if rg -q "EXTERNAL_EVAL_STATUS=PASS" "${external_eval_log}"; then
+		external_eval_status="PASS"
+	elif rg -q "EXTERNAL_EVAL_STATUS=FAIL" "${external_eval_log}"; then
+		external_eval_status="FAIL"
+	else
+		external_eval_status="UNKNOWN"
+	fi
+fi
+if [[ -f "${external_eval_md}" ]]; then
+	external_eval_models="$(rg '^\| `' "${external_eval_md}" | wc -l | tr -d ' ')"
+fi
+
 {
 	echo "# MCQSMoE Paper-Rigor Summary"
 	echo
@@ -86,7 +128,12 @@ fi
 	echo "- benchmark_lines_captured: ${benchmark_count}"
 	echo "- perf_multirun_status: ${perf_multirun_status}"
 	echo "- perf_multirun_runs: ${perf_multirun_runs}"
+	echo "- dense_baseline_status: ${dense_baseline_status}"
+	echo "- dense_small_speedup: ${dense_small_speedup}"
+	echo "- dense_large_speedup: ${dense_large_speedup}"
 	echo "- track_t_status: ${track_t_status}"
+	echo "- external_eval_status: ${external_eval_status}"
+	echo "- external_eval_models: ${external_eval_models}"
 	echo
 	echo "## Benchmarks"
 	echo
@@ -107,7 +154,11 @@ fi
 	echo "- \`foundation_models/paper_mcsqoe/results/logs/perf_multirun.log\`"
 	echo "- \`foundation_models/paper_mcsqoe/results/perf_multirun_summary.md\`"
 	echo "- \`foundation_models/paper_mcsqoe/results/perf_multirun_stats.csv\`"
+	echo "- \`foundation_models/paper_mcsqoe/results/logs/dense_baseline.log\`"
+	echo "- \`foundation_models/paper_mcsqoe/results/dense_baseline_summary.md\`"
 	echo "- \`foundation_models/paper_mcsqoe/results/logs/track_t.log\`"
+	echo "- \`foundation_models/paper_mcsqoe/results/logs/external_eval.log\`"
+	echo "- \`foundation_models/paper_mcsqoe/results/external_eval/summary.md\`"
 } >"${summary_md}"
 
 cat >"${summary_json}" <<JSON
@@ -121,7 +172,12 @@ cat >"${summary_json}" <<JSON
   "benchmark_lines_captured": ${benchmark_count},
   "perf_multirun_status": "${perf_multirun_status}",
   "perf_multirun_runs": ${perf_multirun_runs},
+  "dense_baseline_status": "${dense_baseline_status}",
+  "dense_small_speedup": "${dense_small_speedup}",
+  "dense_large_speedup": "${dense_large_speedup}",
   "track_t_status": "${track_t_status}",
+  "external_eval_status": "${external_eval_status}",
+  "external_eval_models": ${external_eval_models},
   "artifacts": {
     "env_snapshot": "foundation_models/paper_mcsqoe/results/env_snapshot.txt",
     "quality_log": "foundation_models/paper_mcsqoe/results/logs/quality.log",
@@ -130,7 +186,11 @@ cat >"${summary_json}" <<JSON
     "perf_multirun_log": "foundation_models/paper_mcsqoe/results/logs/perf_multirun.log",
     "perf_multirun_summary_md": "foundation_models/paper_mcsqoe/results/perf_multirun_summary.md",
     "perf_multirun_stats_csv": "foundation_models/paper_mcsqoe/results/perf_multirun_stats.csv",
+    "dense_baseline_log": "foundation_models/paper_mcsqoe/results/logs/dense_baseline.log",
+    "dense_baseline_summary_md": "foundation_models/paper_mcsqoe/results/dense_baseline_summary.md",
     "track_t_log": "foundation_models/paper_mcsqoe/results/logs/track_t.log",
+    "external_eval_log": "foundation_models/paper_mcsqoe/results/logs/external_eval.log",
+    "external_eval_summary_md": "foundation_models/paper_mcsqoe/results/external_eval/summary.md",
     "summary_md": "foundation_models/paper_mcsqoe/results/summary.md"
   }
 }
